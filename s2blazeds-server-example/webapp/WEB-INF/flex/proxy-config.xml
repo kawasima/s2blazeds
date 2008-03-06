@@ -24,12 +24,6 @@
 		<properties>
 		</properties>
     </destination>
-    
-    <destination id="catalog">
-		<properties>
-			<url>/{context.root}/catalog.jsp</url>
-		</properties>
-    </destination>
 
     <destination id="ws-catalog">
         <properties>

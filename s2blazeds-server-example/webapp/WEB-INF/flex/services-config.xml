@@ -3,14 +3,12 @@
 
     <services>
         
-        <service class="flex.samples.DatabaseCheckService" id="hsqldb" />
-        
         <service-include file-path="remoting-config.xml" />
         <service-include file-path="proxy-config.xml" />
         <service-include file-path="messaging-config.xml" />
-        
+        <!--
 	    <service class="flex.samples.runtimeconfig.EmployeeRuntimeRemotingDestination" id="runtime-employee-ro" />
-
+  		-->
     	<!-- 
     	Application level default channels. Application level default channels are 
     	necessary when a dynamic destination is being used by a service component
