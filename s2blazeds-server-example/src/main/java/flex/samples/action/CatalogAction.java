@@ -15,7 +15,11 @@ public class CatalogAction {
 
 	@Execute(validator = false)
 	public String index() {
-		items = jdbcManager.from(Product.class).getResultList();
+		items = getProducts();
 		return "catalog.jsp";
+	}
+
+	public List<Product> getProducts() {
+		return jdbcManager.from(Product.class).getResultList();
 	}
 }

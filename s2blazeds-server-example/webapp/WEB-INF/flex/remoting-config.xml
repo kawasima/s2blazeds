@@ -3,18 +3,14 @@
     class="flex.messaging.services.RemotingService">
 
     <adapters>
-        <adapter-definition id="java-object" class="flex.messaging.services.remoting.adapters.JavaAdapter" default="true"/>
+        <adapter-definition id="s2-object" class="org.seasar.blazeds.adapters.S2Adapter" default="true"/>
     </adapters>
 
     <default-channels>
         <channel ref="my-amf"/>
     </default-channels>
 
-    <destination id="product">
-        <properties>
-            <source>flex.samples.product.ProductService</source>
-        </properties>
-    </destination>
+    <destination id="catalogAction"/>
 
     <destination id="chat-room-service">
         <properties>
