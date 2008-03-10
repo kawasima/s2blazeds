@@ -15,11 +15,12 @@
  */
 package org.seasar.blazeds.factories;
 
-import org.seasar.framework.container.SingletonS2Container;
+import org.seasar.framework.container.S2Container;
+import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 
 import flex.messaging.FactoryInstance;
-import flex.messaging.FlexFactory;
 import flex.messaging.config.ConfigMap;
+import flex.messaging.factories.JavaFactory;
 
 /**
  * Seasar2用のコンポーネントのファクトリクラスです。
@@ -27,7 +28,7 @@ import flex.messaging.config.ConfigMap;
  * @version 1.0
  * @author higa
  */
-public class S2Factory implements FlexFactory {
+public class S2Factory extends JavaFactory {
 
 	private static final long serialVersionUID = 1L;
 
@@ -42,7 +43,7 @@ public class S2Factory implements FlexFactory {
 	 * 
 	 */
 	public FactoryInstance createFactoryInstance(String id, ConfigMap configMap) {
-		return new FactoryInstance(this, id, configMap);
+		return new S2FactoryInstance(this, id, configMap);
 	}
 
 	/**
@@ -54,21 +55,10 @@ public class S2Factory implements FlexFactory {
 	 */
 
 	public Object lookup(FactoryInstance factoryInstance) {
-		String name = factoryInstance.getId();
-		return SingletonS2Container.getComponent(name);
+		S2Container container = SingletonS2ContainerFactory.getContainer();
+		if (container.hasComponentDef(factoryInstance.getId())) {
+			return container.getComponent(factoryInstance.getId());
+		}
+		return super.lookup(factoryInstance);
 	}
-
-	/**
-	 * 
-	 * 初期化のためのメソッドですが何もしません。
-	 * 
-	 * @param id
-	 *            識別子
-	 * @param configMap
-	 *            コンポーネントの設定情報
-	 */
-
-	public void initialize(String id, ConfigMap configMap) {
-	}
-
 }

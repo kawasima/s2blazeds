@@ -7,7 +7,7 @@ import org.seasar.struts.annotation.Execute;
 
 import flex.samples.entity.Product;
 
-public class CatalogAction {
+public class ProductAction {
 
 	public JdbcManager jdbcManager;
 
@@ -16,7 +16,7 @@ public class CatalogAction {
 	@Execute(validator = false)
 	public String index() {
 		items = getProducts();
-		return "catalog.jsp";
+		return "products.jsp";
 	}
 
 	public List<Product> getProducts() {

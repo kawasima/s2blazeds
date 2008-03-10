@@ -21,7 +21,6 @@
     
 	</services>
 
-
     <security>
         <security-constraint id="sample-users">
             <auth-method>Custom</auth-method>
