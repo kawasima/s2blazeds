@@ -14,10 +14,6 @@
         <channel ref="my-amf"/>
     </default-channels>
 
-    <destination id="productAction"/>
-    
-    <destination id="product2Action"/>
-
     <destination id="chat-room-service">
         <properties>
             <source>flex.samples.runtimeconfig.ChatRoomService</source>
