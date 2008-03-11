@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="lib/flex-messaging-opt-3-0-0-544.jar" sourcepath="lib/sources/flex-messaging-opt-3-0-0-544-sources.zip"/>
 	<classpathentry kind="lib" path="lib/flex-messaging-proxy-3-0-0-544.jar" sourcepath="lib/sources/flex-messaging-proxy-3-0-0-544-sources.zip"/>
 	<classpathentry kind="lib" path="lib/flex-messaging-remoting-3-0-0-544.jar" sourcepath="lib/sources/flex-messaging-remoting-3-0-0-544-sources.zip"/>
+	<classpathentry kind="lib" path="lib/s2-framework-2.4.23.jar" sourcepath="lib/sources/s2-framework-2.4.23-sources.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
