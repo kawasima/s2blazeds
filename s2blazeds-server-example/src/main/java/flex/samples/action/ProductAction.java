@@ -32,27 +32,7 @@ public class ProductAction {
 	 */
 	@Execute(validator = false)
 	public String index() {
-		items = getProducts();
+		items = jdbcManager.from(Product.class).getResultList();
 		return "products.jsp";
-	}
-
-	/**
-	 * プロダクトのリストを返します。
-	 * 
-	 * @return プロダクトのリスト
-	 */
-	public List<Product> getProducts() {
-		return jdbcManager.from(Product.class).getResultList();
-	}
-
-	/**
-	 * プロダクトを更新します。
-	 * 
-	 * @param product
-	 *            プロダクト
-	 * @return 更新した行数
-	 */
-	public int update(Product product) {
-		return jdbcManager.update(product).execute();
 	}
 }
