@@ -21,7 +21,7 @@
 		]]>
 	</mx:Script>
 
-	<mx:RemoteObject id="srv" destination="productAction">
+	<mx:RemoteObject id="srv" destination="productService">
 		<mx:method name="getProducts" result="resultHandler(event)"/>
 	</mx:RemoteObject>
 	

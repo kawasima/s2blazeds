@@ -10,7 +10,7 @@
 		image="{image.text}"
 		description="{description.text}"/>
 
-	<mx:RemoteObject id="srv" destination="productAction"/>
+	<mx:RemoteObject id="srv" destination="productService"/>
 
 	<mx:Form width="100%">
 	
