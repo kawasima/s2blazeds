@@ -15,7 +15,6 @@
  */
 package org.seasar.blazeds.endpoints;
 
-import org.seasar.blazeds.factories.S2Factory;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 
@@ -59,7 +58,6 @@ public class S2AMFEndpoint extends AMFEndpoint {
 				if (destination == null) {
 					destination = (RemotingDestination) remotingService
 							.createDestination(message.getDestination());
-					destination.setFactory(new S2Factory());
 					destination.setChannels(remotingService
 							.getDefaultChannels());
 					destination.createAdapter(remotingService
