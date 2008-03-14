@@ -2,7 +2,9 @@ package flex.samples.service;
 
 import java.util.Random;
 
+import org.seasar.framework.container.annotation.tiger.Component;
 import org.seasar.framework.container.annotation.tiger.DestroyMethod;
+import org.seasar.framework.container.annotation.tiger.InstanceType;
 
 import flex.messaging.MessageBroker;
 import flex.messaging.messages.AsyncMessage;
@@ -14,6 +16,7 @@ import flex.messaging.util.UUIDUtils;
  * @author higa
  * 
  */
+@Component(instance = InstanceType.SINGLETON)
 public class FeedService {
 
 	/**
@@ -64,7 +67,7 @@ public class FeedService {
 				double change = maxChange - random.nextDouble() * maxChange * 2;
 				double newValue = currentValue + change;
 				if (currentValue < initialValue + initialValue * 0.15
-					&& currentValue > initialValue - initialValue * 0.15) {
+						&& currentValue > initialValue - initialValue * 0.15) {
 					currentValue = newValue;
 				} else {
 					currentValue -= change;
