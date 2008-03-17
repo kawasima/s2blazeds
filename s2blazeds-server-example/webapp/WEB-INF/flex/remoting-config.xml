@@ -12,30 +12,5 @@
     <default-channels>
         <channel ref="my-amf"/>
     </default-channels>
-
-    <destination id="chat-room-service">
-        <properties>
-            <source>flex.samples.runtimeconfig.ChatRoomService</source>
-            <scope>application</scope>
-        </properties>
-    </destination>
-
-    <destination id="database">
-        <properties>
-            <source>flex.samples.sqladmin.DatabaseService</source>
-        </properties>
-    </destination>
-
-    <destination id="census">
-        <properties>
-            <source>flex.samples.census.CensusService</source>
-        </properties>
-    </destination>
-
-    <destination id="flex-client-qos-config" channels="per-client-qos-polling-amf">
-        <properties>
-            <source>flex.samples.qos.FlexClientConfigService</source>
-        </properties>
-    </destination>
     
-  </service>
+</service>

@@ -21,20 +21,4 @@
 
     <destination id="chat"/>
 
-    <destination id="dashboard"/>
-    
-    <destination id="market-data-feed">
-        <properties>
-            <server>
-                <allow-subtopics>true</allow-subtopics>
-                <subtopic-separator>.</subtopic-separator>s
-            </server>
-        </properties>
-        <channels>
-			<channel ref="my-polling-amf"/>
-			<channel ref="my-streaming-amf"/>
-            <channel ref="per-client-qos-polling-amf"/>
-        </channels>        
-    </destination>    
-
 </service>
