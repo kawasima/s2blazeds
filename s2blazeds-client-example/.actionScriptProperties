@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<actionScriptProperties mainApplicationPath="inventorymain.mxml" version="3">
+<actionScriptProperties mainApplicationPath="runtimeconfigmessagingmain.mxml" version="3">
 <compiler additionalCompilerArguments="-services &quot;D:\USER\workspace2\s2blazeds-server-example\webapp\WEB-INF\flex\services-config.xml&quot; -locale ja_JP" copyDependentFiles="true" enableModuleDebug="true" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersion="9.0.28" htmlPlayerVersionCheck="true" outputFolderLocation="D:/USER/workspace2/s2blazeds-server-example/webapp/s2blazeds-client-example-debug" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" useApolloConfig="false" verifyDigests="true" warn="true">
 <compilerSourcePath/>
 <libraryPath defaultLinkType="1">
@@ -9,14 +9,16 @@
 <sourceAttachmentPath/>
 </compiler>
 <applications>
-<application path="inventorymain.mxml"/>
-<application path="chatmain.mxml"/>
-<application path="datapushmain.mxml"/>
 <application path="thumbnailmain.mxml"/>
+<application path="chatmain.mxml"/>
+<application path="inventorymain.mxml"/>
 <application path="remoteobjectmain.mxml"/>
+<application path="runtimeconfigremotingmain.mxml"/>
+<application path="runtimeconfigmessagingmain.mxml"/>
+<application path="datapushmain.mxml"/>
 <application path="webservicemain.mxml"/>
-<application path="updatemain.mxml"/>
 <application path="httpservicemain.mxml"/>
+<application path="updatemain.mxml"/>
 </applications>
 <modules/>
 <buildCSSFiles/>
