@@ -1,4 +1,4 @@
-<catalog>
+<products>
 <c:forEach var="p" items="${items}">
     <product productId="${p.productId}">
         <name>${p.name}</name>
@@ -9,4 +9,4 @@
         <qtyInStock>${p.qtyInStock}</qtyInStock>
     </product>
 </c:forEach>
-</catalog>
+</products>

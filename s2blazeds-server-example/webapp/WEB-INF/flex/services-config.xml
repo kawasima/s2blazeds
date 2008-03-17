@@ -69,19 +69,6 @@
             <endpoint url="https://{server.name}:{server.port}/{context.root}/messagebroker/httpsecure" class="flex.messaging.endpoints.SecureHTTPEndpoint"/>
         </channel-definition>
 
-        <channel-definition id="per-client-qos-polling-amf" class="mx.messaging.channels.AMFChannel">
-            <endpoint url="http://{server.name}:{server.port}/{context.root}/messagebroker/qosamfpolling" class="flex.messaging.endpoints.AMFEndpoint"/>
-            <properties>
-                <polling-enabled>true</polling-enabled>
-                <polling-interval-millis>500</polling-interval-millis>
-                <flex-client-outbound-queue-processor class="flex.samples.qos.CustomDelayQueueProcessor">
-                    <properties>
-                        <flush-delay>5000</flush-delay>
-                    </properties>
-                </flex-client-outbound-queue-processor>
-            </properties>
-        </channel-definition>
-
     </channels>
 
     <logging>
