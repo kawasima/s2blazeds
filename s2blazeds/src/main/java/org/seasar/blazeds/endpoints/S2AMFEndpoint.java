@@ -63,6 +63,7 @@ public class S2AMFEndpoint extends AMFEndpoint {
 					destination.createAdapter(remotingService
 							.getDefaultAdapter());
 					remotingService.addDestination(destination);
+					destination.start();
 				}
 
 			}
