@@ -12,7 +12,9 @@ HOT deployに切り替えるときには、src/main/resources/env.txtの内容�
 </p>
 <ul>
 <li><a href="#HTTPService">HTTPServiceによるSAStrutsとの連携</a></li>
+<li><a href="#WebService">WebService</a></li>
 </ul>
+
 <h3><a name="HTTPService">HTTPServiceによるSAStrutsとの連携</a></h3>
 <p>
 Flex3とSAStrutsは簡単に連携することができます。
@@ -122,5 +124,78 @@ Productエンティティを全件検索した結果をitemsプロパティに�
 <p>
 JSTLを使ってXMLを出力しています。JSPの出力結果は、Flex側でlastResultとして受け取ることができます。
 </p>
+
+<h3><a name="WebService">WebService</a></h3>
+<p>
+Flex3はWebServiceを使って外部と簡単に連携することができます。
+サンプルを実行し"Get Data"のボタンをクリックしてください。
+DataGridにWebServiceでアクセスした結果(XML)が表示されます。
+</p>
+<p>Proxyを経由して外部にアクセスする必要がある場合は、proxy-config.xmlに
+Proxyの設定をしなければいけません。<br />
+s2blazeds-server-exampleプロジェクトの
+webapp/WEB-INF/flex/proxy-config.xmlにws-catalogのエントリがあるので、
+external-proxyのコメントをはずし、自分たちの環境に合わせて書き換えてください。
+external-proxyの詳細は、<a href="http://livedocs.adobe.com/flex/201_jp/html/wwhelp/wwhimpl/common/html/wwhelp.htm?context=LiveDocs_Book_Parts&file=dataservices_config_100_4.html">こちら</a>を参照してください。
+<br />
+書き換えた後は、Tomcat(turnkey)を再起動します。
+</p>
+<a href="s2blazeds-client-example-debug/webservicemain.html">サンプルの実行</a>
+<p>
+クライアントのソースは、s2blazeds-client-exampleプロジェクトのsrc/webservicemain.mxmlになります。
+</p>
+<h4>webservicemain.mxml</h4>
+<pre>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+    backgroundColor="#FFFFFF"&gt;
+	
+    &lt;mx:WebService id="srv" destination="ws-catalog"
+        useProxy="true" showBusyCursor="true"/&gt;
+	
+    &lt;mx:DataGrid dataProvider="{srv.getProducts.lastResult}"
+        width="100%" height="100%"&gt;
+        &lt;mx:columns>
+            &lt;mx:DataGridColumn dataField="productId" headerText="Product Id"/&gt;
+            &lt;mx:DataGridColumn dataField="name" headerText="Name"/&gt;
+            &lt;mx:DataGridColumn dataField="price" headerText="Price"/&gt;
+        &lt;/mx:columns&gt;
+    &lt;/mx:DataGrid&gt;
+
+    &lt;mx:Button label="Get Data" click="srv.getProducts()"/&gt;
+	
+&lt;/mx:Application&gt;
+</pre>
+<p>
+WebServiceタグを使って、WebServiceを呼び出すことができます。
+destination属性で指定するのは、リクエストの送り先の名前です。
+具体的な送り先は、webapp/WEB-INF/flex/proxy-config.xmlの
+destinationタグで次のように指定します。<br />
+WebServiceタグのdestination属性の値と、proxy-config.xmlのdestinationタグの
+id属性の値は一致させます。
+</p>
+<pre>
+&lt;destination id="ws-catalog"&gt;
+    &lt;properties&gt;
+        &lt;wsdl&gt;http://livecycledata.org/services/ProductWS?wsdl&lt;/wsdl&gt;
+        &lt;soap&gt;*&lt;/soap&gt;
+        &lt;!--
+        &lt;external-proxy&gt;
+            &lt;server&gt;10.10.10.10&lt;/server&gt;
+            &lt;port&gt;3128&lt;/port&gt;
+            &lt;nt-domain&gt;mycompany&lt;/nt-domain&gt;
+            &lt;username&gt;flex&lt;/username&gt;
+            &lt;password&gt;flex&lt;/password&gt;
+        &lt;/external-proxy&gt;
+        --&gt;
+    &lt;/properties&gt;
+    &lt;adapter ref="soap-proxy"/&gt;
+&lt;/destination&gt;
+</pre>
+<p>
+id属性がsrvなので、srcという変数がActionScriptのクラス(MXMLがコンパイルされた結果のクラス)
+に定義されます。
+</p>
+
 </body>
 </html>

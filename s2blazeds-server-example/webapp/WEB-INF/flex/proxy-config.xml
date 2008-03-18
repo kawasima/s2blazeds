@@ -23,15 +23,16 @@
 
     <destination id="DefaultHTTP">
 		<properties>
+		    <dynamic-url>*</dynamic-url>
+		    <!--
+		    <external-proxy>
+                <server>10.10.10.10</server>
+                <port>3128</port>
+                <nt-domain>mycompany</nt-domain>
+                <username>flex</username>
+                <password>flex</password>
+            </external-proxy>
+            -->
 		</properties>
-    </destination>
-
-    <destination id="ws-catalog">
-        <properties>
-            <wsdl>http://livecycledata.org/services/ProductWS?wsdl</wsdl>
-            <soap>*</soap>
-        </properties>
-        <adapter ref="soap-proxy"/>
-    </destination>
-    
+    </destination>    
 </service>
