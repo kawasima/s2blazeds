@@ -3,7 +3,7 @@
 	backgroundColor="#FFFFFF">
 	
 	<mx:HTTPService id="srv" url="@ContextRoot()/product"
-		useProxy="true" showBusyCursor="true"/>
+		showBusyCursor="true"/>
 
 	<mx:DataGrid dataProvider="{srv.lastResult.products.product}"
 		width="100%" height="100%"/> 

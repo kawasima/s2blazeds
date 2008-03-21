@@ -25,10 +25,12 @@
 	</mx:Script>
 	
 	<mx:Producer id="producer" destination="chat"/>
-	<mx:Consumer id="consumer" destination="chat" message="messageHandler(event.message)"/>
+	<mx:Consumer id="consumer" destination="chat"
+		message="messageHandler(event.message)"/>
 	
 	<mx:Panel title="Chat" width="100%" height="100%">
-		<mx:TextArea id="log" width="100%" height="100%"/>
+		<mx:TextArea id="log" editable="false" width="100%" height="100%"
+			backgroundColor="#CEEEE8"/>
 		<mx:ControlBar>
 			 <mx:TextInput id="msg" width="100%" enter="send()"/>
 			 <mx:Button label="Send" click="send()"/> 

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="horizontal" width="100%" height="100%"
-	title="Product Details" paddingLeft="12" paddingRight="12" paddingTop="12" paddingBottom="12">
+	title="Product Details" paddingLeft="12" paddingRight="12" paddingTop="12" paddingBottom="12"
+	xmlns:entity="flex.samples.entity.*">
 	
-	<mx:Object id="product"/>
+	<entity:Product id="product"/>
 	
 	<mx:CurrencyFormatter id="cf"/>
 	
