@@ -12,20 +12,22 @@ HOT deployに切り替えるときには、src/main/resources/env.txtの内容�
 </p>
 <ul>
 <li><a href="#HTTPService">HTTPServiceによるSAStrutsとの連携</a></li>
-<li><a href="#WebService">WebService</a></li>
+<li><a href="#WebService">WebServiceの呼び出し</a></li>
+<li><a href="#RemoteObject">RemoteObjectによるSeasar2との連携</a></li>
+<li><a href="#ProducerAndConsumer">メッセージの送信と受信</a></li>
 </ul>
 
 <h3><a name="HTTPService">HTTPServiceによるSAStrutsとの連携</a></h3>
 <p>
-Flex3とSAStrutsは簡単に連携することができます。
+FlexとSAStrutsは簡単に連携できます。
 サンプルを実行し"Get Data"のボタンをクリックしてください。
 DataGridにプロダクトテーブルの中身が表示されます。
 カラムをクリックすることでソートをすることもできます。
 また、カラムをドラッグアンドドロップすることで、カラムの位置を入れ替えることもできます。
 </p>
-<a href="s2blazeds-client-example-debug/httpservicemain.html">サンプルの実行</a>
+<a href="s2blazeds-client-example-debug/httpservicemain.html" target="_blank">サンプルの実行</a>
 <p>
-クライアントのソースは、s2blazeds-client-exampleプロジェクトのsrc/httpservicemain.mxmlになります。
+s2blazeds-client-exampleプロジェクトのsrc/httpservicemain.mxmlをみてみましょう。
 </p>
 <h4>httpservicemain.mxml</h4>
 <pre>
@@ -33,7 +35,8 @@ DataGridにプロダクトテーブルの中身が表示されます。
 &lt;mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
     backgroundColor="#FFFFFF"&gt;
 	
-    &lt;mx:HTTPService id="srv" url="../product"/&gt;
+    &lt;mx:HTTPService id="srv" url="@ContextRoot()/product"
+        showBusyCursor="true"/&gt;
 
     &lt;mx:DataGrid dataProvider="{srv.lastResult.products.product}"
         width="100%" height="100%"/&gt;
@@ -44,9 +47,11 @@ DataGridにプロダクトテーブルの中身が表示されます。
 </pre>
 <p>
 HTTPServiceタグを使って、サーバにリクエストを送ることができます。
-リクエストの送り先は、url属性で指定します。
-id属性がsrvなので、srcという変数がActionScriptのクラス(MXMLがコンパイルされた結果のクラス)
-に定義されます。
+リクエストの送り先は、url属性で指定します。<br />
+@ContextRoot()は、Flash(Flex)がダウンロードされたコンテキストのパスを返します。
+同じサイトのURLにアクセスする場合は、/s2blazeds-server-exampleのように
+直接リテラルを指定するのでなく、@ContextRoot()を使ったほうが良いでしょう。
+コンテキストのパスの変更に柔軟(ソースコードを変更する必要がない)に対応するためです。
 </p>
 <p>
 Buttonタグのclick属性でsrv.send()のように呼び出すと
@@ -56,8 +61,8 @@ Buttonタグのclick属性でsrv.send()のように呼び出すと
 HTTPServiceは非同期呼び出しになります。
 srv.send()の結果は、非同期でsrc.lastResultに格納されます。
 lastResultの中身は、次のようなXMLなので、srv.lastResult.products.productを
-DataGridタグのdataProvider属性に指定することで、
-productの繰り返しを表示することができます。
+DataGridタグのdataProvider属性に指定すると、
+productが繰り返して表示されます。
 </p>
 <pre>
 &lt;products&gt;
@@ -104,7 +109,7 @@ public class ProductAction {
 </pre>
 <p>
 Productエンティティを全件検索した結果をitemsプロパティに代入し、products.jspに遷移しています。
-それでは、products.jspを見てみましょう。
+それでは、webapp/product/products.jspを見てみましょう。
 </p>
 <h4>products.jsp</h4>
 <pre>
@@ -122,27 +127,30 @@ Productエンティティを全件検索した結果をitemsプロパティに�
 &lt;/products&gt;
 </pre>
 <p>
-JSTLを使ってXMLを出力しています。JSPの出力結果は、Flex側でlastResultとして受け取ることができます。
+JSPでXMLを出力しています。JSPの出力結果は、Flex側でlastResultとして受け取ることができます。
 </p>
 
-<h3><a name="WebService">WebService</a></h3>
+<h3><a name="WebService">WebServiceの呼び出し</a></h3>
 <p>
-Flex3はWebServiceを使って外部と簡単に連携することができます。
+FlexはWebServiceを使って外部と簡単に連携することができます。
 サンプルを実行し"Get Data"のボタンをクリックしてください。
 DataGridにWebServiceでアクセスした結果(XML)が表示されます。
 </p>
 <p>Proxyを経由して外部にアクセスする必要がある場合は、proxy-config.xmlに
-Proxyの設定をしなければいけません。<br />
+Proxyの設定をしなければいけません。
+</p>
+<p>
 s2blazeds-server-exampleプロジェクトの
-webapp/WEB-INF/flex/proxy-config.xmlにws-catalogのエントリがあるので、
+webapp/WEB-INF/flex/proxy-config.xmlにDefaultHTTPのエントリがあるので、
 external-proxyのコメントをはずし、自分たちの環境に合わせて書き換えてください。
 external-proxyの詳細は、<a href="http://livedocs.adobe.com/flex/201_jp/html/wwhelp/wwhimpl/common/html/wwhelp.htm?context=LiveDocs_Book_Parts&file=dataservices_config_100_4.html">こちら</a>を参照してください。
-<br />
+</p>
+<p>
 書き換えた後は、Tomcat(turnkey)を再起動します。
 </p>
-<a href="s2blazeds-client-example-debug/webservicemain.html">サンプルの実行</a>
+<a href="s2blazeds-client-example-debug/webservicemain.html" target="_blank">サンプルの実行</a>
 <p>
-クライアントのソースは、s2blazeds-client-exampleプロジェクトのsrc/webservicemain.mxmlになります。
+s2blazeds-client-exampleプロジェクトのsrc/webservicemain.mxmlをみてみましょう。
 </p>
 <h4>webservicemain.mxml</h4>
 <pre>
@@ -150,17 +158,12 @@ external-proxyの詳細は、<a href="http://livedocs.adobe.com/flex/201_jp/html
 &lt;mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
     backgroundColor="#FFFFFF"&gt;
 	
-    &lt;mx:WebService id="srv" destination="ws-catalog"
-        useProxy="true" showBusyCursor="true"/&gt;
+    &lt;mx:WebService id="srv"
+        wsdl="http://livecycledata.org/services/ProductWS?wsdl"
+        showBusyCursor="true"/&gt;
 	
     &lt;mx:DataGrid dataProvider="{srv.getProducts.lastResult}"
-        width="100%" height="100%"&gt;
-        &lt;mx:columns>
-            &lt;mx:DataGridColumn dataField="productId" headerText="Product Id"/&gt;
-            &lt;mx:DataGridColumn dataField="name" headerText="Name"/&gt;
-            &lt;mx:DataGridColumn dataField="price" headerText="Price"/&gt;
-        &lt;/mx:columns&gt;
-    &lt;/mx:DataGrid&gt;
+        width="100%" height="100%"/&gt;
 
     &lt;mx:Button label="Get Data" click="srv.getProducts()"/&gt;
 	
@@ -168,34 +171,94 @@ external-proxyの詳細は、<a href="http://livedocs.adobe.com/flex/201_jp/html
 </pre>
 <p>
 WebServiceタグを使って、WebServiceを呼び出すことができます。
-destination属性で指定するのは、リクエストの送り先の名前です。
-具体的な送り先は、webapp/WEB-INF/flex/proxy-config.xmlの
-destinationタグで次のように指定します。<br />
-WebServiceタグのdestination属性の値と、proxy-config.xmlのdestinationタグの
-id属性の値は一致させます。
+wsdl属性でWSDLのロケーションを指定します。
 </p>
-<pre>
-&lt;destination id="ws-catalog"&gt;
-    &lt;properties&gt;
-        &lt;wsdl&gt;http://livecycledata.org/services/ProductWS?wsdl&lt;/wsdl&gt;
-        &lt;soap&gt;*&lt;/soap&gt;
-        &lt;!--
-        &lt;external-proxy&gt;
-            &lt;server&gt;10.10.10.10&lt;/server&gt;
-            &lt;port&gt;3128&lt;/port&gt;
-            &lt;nt-domain&gt;mycompany&lt;/nt-domain&gt;
-            &lt;username&gt;flex&lt;/username&gt;
-            &lt;password&gt;flex&lt;/password&gt;
-        &lt;/external-proxy&gt;
-        --&gt;
-    &lt;/properties&gt;
-    &lt;adapter ref="soap-proxy"/&gt;
-&lt;/destination&gt;
-</pre>
 <p>
-id属性がsrvなので、srcという変数がActionScriptのクラス(MXMLがコンパイルされた結果のクラス)
-に定義されます。
+Buttonタグのclick属性でsrv.getProducts()のように呼び出すと
+WebServiceにリクエストを送ることができます。
+</p>
+<p>
+WebServiceは非同期呼び出しになります。
+srv.getProducts()の結果は、非同期でsrc.getProducts.lastResultに格納されます。
 </p>
 
+<h3><a name="RemoteObject">RemoteObjectによるSeasar2との連携</a></h3>
+<p>
+FlexはRemoteObjectを使ってSeasar2で管理されているコンポーネントと
+簡単に連携することができます。
+サンプルを実行し"Get Data"のボタンをクリックしてください。
+DataGridにProductService#getProducts()の結果が表示されます。
+</p>
+<a href="s2blazeds-client-example-debug/remoteobjectmain.html" target="_blank">サンプルの実行</a>
+<p>
+s2blazeds-client-exampleプロジェクトのsrc/remoteobjectmain.mxmlをみてみましょう。
+</p>
+<h4>webservicemain.mxml</h4>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+    backgroundColor="#FFFFFF"&gt;
+	
+    &lt;mx:RemoteObject id="srv" destination="productService"
+        showBusyCursor="true"/&gt;
+	
+    &lt;mx:DataGrid dataProvider="{srv.getProducts.lastResult}"
+        width="100%" height="100%"/&gt;
+
+    &lt;mx:Button label="Get Data" click="srv.getProducts()"/&gt;
+	
+&lt;/mx:Application&gt;
+</pre>
+<p>
+RemoteObjectタグを使って、WebServiceを呼び出すことができます。
+destination属性でSeasar2で管理されているコンポーネント名を指定します。
+</p>
+<p>
+Buttonタグのclick属性でsrv.getProducts()のように呼び出すと
+ProductService#getProducts()を呼び出すことができます。
+</p>
+<p>
+RemoteObjectは非同期呼び出しになります。
+srv.getProducts()の結果は、非同期でsrc.getProducts.lastResultに格納されます。
+</p>
+
+<h3><a name="ProducerAndConsumer">メッセージの送信と受信</a></h3>
+<p>
+FlexはProducerとConsumerを使ってメッセージの送信と受信を簡単におこなうことができます。
+サンプルを二回実行し"Send"のボタンをクリックしてください。
+送ったメッセージがもう一つのアプリケーションにも表示されます。
+</p>
+<a href="s2blazeds-client-example-debug/chatmain.html" target="_blank">サンプルの実行</a>
+<p>
+s2blazeds-client-exampleプロジェクトのsrc/remoteobjectmain.mxmlをみてみましょう。
+</p>
+<h4>webservicemain.mxml</h4>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+    backgroundColor="#FFFFFF"&gt;
+	
+    &lt;mx:RemoteObject id="srv" destination="productService"
+        showBusyCursor="true"/&gt;
+	
+    &lt;mx:DataGrid dataProvider="{srv.getProducts.lastResult}"
+        width="100%" height="100%"/&gt;
+
+    &lt;mx:Button label="Get Data" click="srv.getProducts()"/&gt;
+	
+&lt;/mx:Application&gt;
+</pre>
+<p>
+RemoteObjectタグを使って、WebServiceを呼び出すことができます。
+destination属性でSeasar2で管理されているコンポーネント名を指定します。
+</p>
+<p>
+Buttonタグのclick属性でsrv.getProducts()のように呼び出すと
+ProductService#getProducts()を呼び出すことができます。
+</p>
+<p>
+RemoteObjectは非同期呼び出しになります。
+srv.getProducts()の結果は、非同期でsrc.getProducts.lastResultに格納されます。
+</p>
 </body>
 </html>

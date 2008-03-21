@@ -12,11 +12,11 @@
     </default-channels>
 
     <destination id="feed">
-    	<!-- Destination specific channel configuration can be defined if needed
-        <channels>
+    	<!--
+    	<channels>
             <channel ref="my-streaming-amf"/>
-        </channels>        
-         -->
+        </channels>
+        -->        
     </destination>
 
     <destination id="chat"/>

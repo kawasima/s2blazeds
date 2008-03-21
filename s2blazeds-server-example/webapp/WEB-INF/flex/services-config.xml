@@ -37,9 +37,11 @@
     </security>
 
     <channels>
-    
         <channel-definition id="my-streaming-amf" class="mx.messaging.channels.StreamingAMFChannel">
             <endpoint url="http://{server.name}:{server.port}/{context.root}/messagebroker/streamingamf" class="flex.messaging.endpoints.StreamingAMFEndpoint"/>
+            <properties>
+                <max-streaming-clients>100</max-streaming-clients>
+            </properties>
         </channel-definition>
     
         <channel-definition id="my-amf" class="mx.messaging.channels.AMFChannel">
@@ -57,7 +59,9 @@
             <endpoint url="http://{server.name}:{server.port}/{context.root}/messagebroker/amfpolling" class="flex.messaging.endpoints.AMFEndpoint"/>
             <properties>
                 <polling-enabled>true</polling-enabled>
-                <polling-interval-seconds>4</polling-interval-seconds>
+                <polling-interval-millis>0</polling-interval-millis>
+                <wait-interval-millis>-1</wait-interval-millis>
+                <max-waiting-poll-requests>100</max-waiting-poll-requests>
             </properties>
         </channel-definition>
 

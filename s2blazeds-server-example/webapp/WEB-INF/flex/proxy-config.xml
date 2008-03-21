@@ -34,5 +34,6 @@
             </external-proxy>
             -->
 		</properties>
-    </destination>    
+    </destination>
+    
 </service>
