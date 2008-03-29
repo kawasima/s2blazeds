@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flexProperties flexServerType="2" serverContextRoot="/s2blazeds-server-example" serverRoot="D:/USER/workspace2/s2blazeds-server-example/webapp" serverRootURL="http://localhost:8400/s2blazeds-server-example" toolCompile="true" useServerFlexSDK="false" version="1"/>
+<flexProperties flexServerType="2" serverContextRoot="/s2blazeds-server-example" serverRoot="${DOCUMENTS}/s2blazeds-server-example/webapp" serverRootURL="http://localhost:8400/s2blazeds-server-example" toolCompile="true" useServerFlexSDK="false" version="1"/>
