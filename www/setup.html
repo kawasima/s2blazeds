@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta http-equiv="Content-Language" content="ja" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="keywords" content="S2BlazeDS, BlazeDS, Seasar, The Seasar Project, The Seasar Foundation, OSS, Open Source Software, Java, Framework" />
+<meta name="description" content="S2BlazeDS" />
+<title>S2BlazeDS - Setup</title>
+<link rel="stylesheet" type="text/css" href="http://www.seasar.org/theme/main.css" media="screen,projection" />
+<link rel="stylesheet" type="text/css" href="http://www.seasar.org/theme/print.css" media="print" />
+</head>
+
+<body>
+
+<div id="wrapper">
+
+<div id="header">
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="logo"><h2 id="h01" class="hide">The Seasar Foundation Project Site</h2><img src="http://www.seasar.org/images/seasar_logo_blue.gif" alt="The Seasar Project" width="390" height="180" /></div>
+
+<div id="tool">
+
+<h2><a href="http://search.seasar.org/">Site Search</a></h2>
+
+<form id="search" name="search" action="http://search.seasar.org/">
+<div>
+	<input id="search_phrase" type="text" name="phrase" size="20" />
+	<input type="hidden" name="perpage" value="30" />
+	<input type="hidden" name="enc" value="UTF-8" />
+	<input id="search_go" type="submit" value="Search" />
+</div>
+</form>
+
+<h2>Seasar Banner</h2>
+
+<p><a href="http://www.seasar.org/images/seasar_banner.gif"><img src="http://www.seasar.org/images/seasar_banner.gif" alt="Seasar Banner" title="Seasar Banner" width="146" height="33" /></a></p>
+
+</div>
+
+</div><!-- header -->
+
+
+<div id="contents_left">
+
+<h2>Menu</h2>
+
+<ul>
+    <li><a href="index.html">ホーム</a></li>
+    <li><a href="setup.html">セットアップ</a>
+    	<ul>
+    		<li><a href="#tutorial">チュートリアル</a></li>
+    		<li><a href="#blank">雛形</a></li>
+    	</ul>
+    </li>
+    <li><a href="download.html">ダウンロード</a></li>
+	<li><a href="tutorial.html">チュートリアル</a></li>
+	<li><a href="featureReference.html">機能リファレンス</a></li>
+	<li><a href="fileReference.html">設定ファイルリファレンス</a></li>
+</ul>
+
+</div><!-- contents_left -->
+
+<div id="contents_center">
+
+<div id="article">
+
+<div class="section">
+
+<h2>セットアップ</h2>
+
+<h3><a name="tutorial">チュートリアルのセットアップ</a></h3>
+<p>
+チュートリアル用のプロジェクトは、Eclipse、Tomcat、Tomcat Launcherを使う用に設定されています。
+S2BlazeDSそのものは、特定のIDEやアプリケーションサーバに依存しませんが、
+チュートリアルを試すためには、Eclipse、Tomcat、Tomcat Launcherをお使いください。
+</p>
+<p>
+<a href="download.html">ダウンロードのページ</a>からs2blazds-server-example-xxx.zipを
+ダウンロードして解凍します。
+</p>
+<p>
+解凍した中にs2blazds-server-exampleというディレクトリがあるので、
+そのディレクトリをEclipseのプロジェクトとしてインポートします。
+</p>
+<p>
+<a href="download.html">ダウンロードのページ</a>からs2blazds-client-example-xxx.zipを
+ダウンロードして解凍します。
+</p>
+<p>
+解凍した中にs2blazds-client-exampleというディレクトリがあるので、
+そのディレクトリをs2blazds-server-exampleと同じワークスペースに、
+Eclipseのプロジェクトとしてインポートします。
+</p>
+<p>
+<a href="download.html">ダウンロードのページ</a>からturnkey_xxx.zipを
+ダウンロードして解凍します。
+</p>
+<p>
+解凍した中にturnkey_xxxというディレクトリがあるので、
+そのディレクトリを適当な場所(例えば、C:\turnkey\turnkey_xxx)に移動します。
+</p>
+<p>
+Tomcat LauncherはSysdeo社が開発しているPluginですが、
+Seasarプロジェクトの更新サイトからインストールすることが出来ます。
+Eclipseのメニューから[Help]-&gt; [Software Updates] -&gt; [Find and Install…]を選択し、 
+Install/Updateのダイアログを表示させます。
+</p>
+<p>
+[Search for new features to install]のラジオボタンをチェックして[Next]ボタンをクリックします。 
+[New Remote site]ボタンをクリックして[Name]を[Seasar Plugin3.2]、 
+[URL]に[http://eclipse.seasar.org/updates/<b>3.2</b>/]を入力して[OK]をクリックします。
+</p>
+<p>
+[Finish]ボタンをクリックするとインストールする候補として、
+Tomcat Launcherが出てくるので、これらをチェックしてインストールしましょう。
+</p>
+<p>
+ResourceSynchronizerは、ブラウザからEclipseを操作するためのPluginです。
+例外が発生したときに、ブラウザ上にスタックトレースを表示し、
+そのスタックトレースの該当するソースコードを表示するために使います。
+Strutsを使わない場合は必要ありません。
+</p>
+<p>
+Eclipseのメニューから[Help]-&gt; [Software Updates] -&gt; [Find and Install…]を選択し、 
+Install/Updateのダイアログを表示させます。
+</p>
+<p>
+[Search for new features to install]のラジオボタンをチェックして[Next]ボタンをクリックします。 
+[New Remote site]ボタンをクリックして[Name]を[Seasar Plugin3.3]、 
+[URL]に[http://eclipse.seasar.org/updates/<b>3.3</b>/]を入力して[OK]をクリックします。
+</p>
+<p>
+[Finish]ボタンをクリックするとインストールする候補として、
+ResourceSynchronizerが出てくるので、これらをチェックしてインストールしましょう。
+</p>
+<p>
+Propertiesファイルを日本語で簡単に入力するために、プロパティエディタPluginをインストールします。
+このPluginは必須ではありませんが、あるととっても便利です。
+</p>
+<p>
+Eclipseのメニューから[Help] -> [Software Updates] -> [Find and Install…]を選択し、
+Install/Updateのダイアログを表示させます。
+</p>
+<p>
+[Search for new features to install]のラジオボタンをチェックして[Next]ボタンをクリックします。
+[New Remote site]ボタンをクリックして[Name]を[PropertiesEditor]、
+[URL]に[http://propedit.sourceforge.jp/eclipse/updates/]を入力して[OK]をクリックします。
+</p>
+<p>
+[Finish]ボタンをクリックするとインストールする候補として、
+PropertiesEditorForEclipse3.xが出てくるのでそのままインストールしましょう。
+既にインストール済みの場合はその必要はありません。
+</p>
+<p>
+インストールが終わったら、Tomcat Launcherの設定を行います。 
+メニューの[Window] -&gt; [Preferences…]-&gt; [Tomcat]を選択してください。 
+Tomcatバージョンにバージョン6.xを選択し、Tomcatホームにturnkey_xxxを指定します。
+コンテキスト宣言モードにコンテキストファイルを選び、[OK]をクリックします。
+</p>
+<p>
+s2blazds-server-exampleのプロジェクトを右クリックして、
+[Tomcatプロジェクト] -&gt; [Tomcatのコンテキストを更新]を選びます。
+これで、Tomcat Launcherの設定は完了しました。
+</p>
+<p>
+早速、Tomcatを起動してみましょう。
+メニューから[Tomcat] -&gt;[Tomcat起動]を選択して、Tomcatを起動します。
+エラーなしに無事に起動したのを確認して、ブラウザで<br />
+http://localhost:8400/s2blazeds-server-example/にアクセスしてください。
+無事にチュートリアルが表示されれば、セットアップはうまくいっています。
+チュートリアルを読み進めてください。
+</p>
+
+<h3><a name="blank">雛形のセットアップ</a></h3>
+<p>
+プロジェクトの雛形としてS2BlazeDSサーバ雛形プロジェクトが用意されています。
+雛形プロジェクトは、サンプルのアプリケーションがないことを除いては、
+チュートリアル用のプロジェクトと同じです。
+<a href="#tutorial">チュートリアルのセットアップ</a>を参考にしてください。
+</p>
+<p>
+プロジェクトにあわせて、ルートパッケージを指定します。
+ルートパッケージの詳細は、<a href="featureReference.html#Project">プロジェクト構成</a>を参照してください。
+</p>
+<p>
+データアクセスの設定は、<a href="featureReference.html#DataAccess">こちら</a>を参照してください。
+</p>
+<p>
+トランザクションの設定は、<a href="featureReference.html#Transaction">こちら</a>を参照してください。
+</p>
+
+</div><!-- section -->
+
+</div><!-- article -->
+
+</div><!-- contents_center -->
+
+<div id="footer">
+<address>&copy; Copyright The Seasar Foundation and the others 2006, all rights reserved.</address>
+<div class="line"><span class="hide">spacer</span></div>
+</div><!-- footer -->
+
+</div><!-- wrapper -->
+
+</body>
+</html>
+

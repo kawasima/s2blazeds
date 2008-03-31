@@ -1,0 +1,630 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta http-equiv="Content-Language" content="ja" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="keywords" content="BlazeDS, S2BlazeDS, Seasar, The Seasar Project, The Seasar Foundation, OSS, Open Source Software, Java, Framework" />
+<meta name="description" content="S2BlazeDS" />
+<title>S2BlazeDS - File Reference</title>
+<link rel="stylesheet" type="text/css" href="http://www.seasar.org/theme/main.css" media="screen,projection" />
+<link rel="stylesheet" type="text/css" href="http://www.seasar.org/theme/print.css" media="print" />
+</head>
+
+<body>
+
+<div id="wrapper">
+
+<div id="header">
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="logo"><h2 id="h01" class="hide">The Seasar Foundation Project Site</h2><img src="http://www.seasar.org/images/seasar_logo_blue.gif" alt="The Seasar Project" width="390" height="180" /></div>
+
+<div id="tool">
+
+<h2><a href="http://search.seasar.org/">Site Search</a></h2>
+
+<form id="search" name="search" action="http://search.seasar.org/">
+<div>
+	<input id="search_phrase" type="text" name="phrase" size="20" />
+	<input type="hidden" name="perpage" value="30" />
+	<input type="hidden" name="enc" value="UTF-8" />
+	<input id="search_go" type="submit" value="Search" />
+</div>
+</form>
+
+<h2>Seasar Banner</h2>
+
+<p><a href="http://www.seasar.org/images/seasar_banner.gif"><img src="http://www.seasar.org/images/seasar_banner.gif" alt="Seasar Banner" title="Seasar Banner" width="146" height="33" /></a></p>
+
+</div>
+
+</div><!-- header -->
+
+
+<div id="contents_left">
+
+<h2>Menu</h2>
+
+<ul>
+    <li><a href="index.html">ホーム</a></li>
+    <li><a href="setup.html">セットアップ</a></li>
+    <li><a href="download.html">ダウンロード</a></li>
+	<li><a href="tutorial.html">チュートリアル</a></li>
+	<li><a href="featureReference.html">機能リファレンス</a></li>
+	<li><a href="fileReference.html">設定ファイルリファレンス</a>
+	    <ul>
+			<li><a href="#web">web.xml</a></li>
+			<li><a href="#services-config">services-config.xml</a></li>
+			<li><a href="#app">app.dicon</a></li>
+			<li><a href="#convention">convention.dicon</a></li>
+			<li><a href="#env">env.txt</a></li>
+			<li><a href="#env_ut">env_ut.txt</a></li>
+			<li><a href="#s2container">s2container.dicon</a></li>
+			<li><a href="#creator">creator.dicon</a></li>
+			<li><a href="#customizer">customizer.dicon</a></li>
+			<li><a href="#jdbc">jdbc.dicon</a></li>
+			<li><a href="#s2jdbc">s2jdbc.dicon</a></li>
+			<li><a href="#log4j">log4j.properties</a></li>
+		</ul>
+	</li>
+</ul>
+
+</div><!-- contents_left -->
+
+<div id="contents_center">
+
+<div id="article">
+
+<div class="section">
+
+<h2>設定ファイルリファレンス</h2>
+
+<p>
+SAStrutsで使われている設定ファイルの説明をします。
+</p>
+
+<h3><a name="web">web.xml</a></h3>
+<p>
+サーブレットコンテナ用の設定ファイルです。WEB-INFにおきます。
+sa-struts-tutorialプロジェクトでは、webapp/WEB-INFにあります。
+</p>
+<pre>
+&lt;?xml version="1.0"?&gt;
+
+&lt;web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+    version="2.4"&gt;
+
+    &lt;context-param&gt;
+        &lt;param-name&gt;<b>flex.class.path</b>&lt;/param-name&gt;
+        &lt;param-value&gt;/WEB-INF/flex/hotfixes&lt;/param-value&gt;
+    &lt;/context-param&gt;
+
+    &lt;listener&gt;
+        &lt;listener-class&gt;<b>flex.messaging.HttpFlexSession</b>&lt;/listener-class&gt;
+    &lt;/listener&gt;
+    
+    &lt;filter&gt;
+        &lt;filter-name&gt;<a name="encodingfilter">encodingfilter</a>&lt;/filter-name&gt;
+        &lt;filter-class&gt;
+            <b>org.seasar.extension.filter.EncodingFilter</b>
+        &lt;/filter-class&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;encoding&lt;/param-name&gt;
+            &lt;param-value&gt;UTF-8&lt;/param-value&gt;
+        &lt;/init-param&gt;
+    &lt;/filter&gt;
+
+    &lt;filter&gt;
+        &lt;filter-name&gt;s2filter&lt;/filter-name&gt;
+        &lt;filter-class&gt;
+            <b>org.seasar.framework.container.filter.S2ContainerFilter</b>
+        &lt;/filter-class&gt;
+    &lt;/filter&gt;
+
+    &lt;filter&gt;
+        &lt;filter-name&gt;hotdeployfilter&lt;/filter-name&gt;
+        &lt;filter-class&gt;
+            <b>org.seasar.framework.container.hotdeploy.HotdeployFilter</b>
+        &lt;/filter-class&gt;
+    &lt;/filter&gt;
+
+    &lt;filter&gt;
+        &lt;filter-name&gt;routingfilter&lt;/filter-name&gt;
+        &lt;filter-class&gt;
+            org.seasar.struts.filter.RoutingFilter
+        &lt;/filter-class&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;jspDirectAccess&lt;/param-name&gt;
+            &lt;param-value&gt;false&lt;/param-value&gt;
+        &lt;/init-param&gt;
+    &lt;/filter&gt;
+        
+    &lt;filter-mapping&gt;
+        &lt;filter-name&gt;encodingfilter&lt;/filter-name&gt;
+        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+    &lt;/filter-mapping&gt;
+
+    &lt;filter-mapping&gt;
+        &lt;filter-name&gt;s2filter&lt;/filter-name&gt;
+        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+        &lt;dispatcher&gt;REQUEST&lt;/dispatcher&gt;
+        &lt;dispatcher&gt;FORWARD&lt;/dispatcher&gt;
+        &lt;dispatcher&gt;INCLUDE&lt;/dispatcher&gt;
+    &lt;/filter-mapping&gt;
+
+    &lt;filter-mapping&gt;
+        &lt;filter-name&gt;hotdeployfilter&lt;/filter-name&gt;
+        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+        &lt;dispatcher&gt;REQUEST&lt;/dispatcher&gt;
+        &lt;dispatcher&gt;FORWARD&lt;dispatcher&gt;
+        &lt;dispatcher&gt;INCLUDE&lt;/dispatcher&gt;
+    &lt;/filter-mapping&gt;
+    
+    &lt;filter-mapping&gt;
+        &lt;filter-name&gt;routingfilter&lt;/filter-name&gt;
+        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+        &lt;dispatcher&gt;REQUEST&lt;/dispatcher&gt;
+    &lt;/filter-mapping&gt;
+    
+    &lt;servlet&gt;
+        &lt;servlet-name&gt;action&lt;/servlet-name&gt;
+        &lt;servlet-class&gt;
+            org.apache.struts.action.ActionServlet
+        &lt;/servlet-class&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;config&lt;/param-name&gt;
+            &lt;param-value&gt;/WEB-INF/struts-config.xml&lt;/param-value&gt;
+        &lt;/init-param&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;configFactory&lt;/param-name&gt;
+            &lt;param-value&gt;
+                org.seasar.struts.config.S2ModuleConfigFactory
+            &lt;/param-value&gt;
+        &lt;/init-param&gt;
+        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+    &lt;/servlet&gt;
+
+    &lt;servlet&gt;
+        &lt;servlet-name&gt;s2container&lt;/servlet-name&gt;
+        &lt;servlet-class&gt;
+            <b>org.seasar.framework.container.servlet.S2ContainerServlet</b>
+        &lt;/servlet-class&gt;
+        &lt;load-on-startup&gt;2&lt;/load-on-startup&gt;
+    &lt;/servlet&gt;
+    
+    &lt;servlet&gt;
+        &lt;servlet-name&gt;MessageBrokerServlet&lt;/servlet-name&gt;
+        &lt;display-name&gt;MessageBrokerServlet&lt;/display-name&gt;
+        &lt;servlet-class&gt;<b>flex.messaging.MessageBrokerServlet</b>&lt;/servlet-class&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;services.configuration.file&lt;/param-name&gt;
+            &lt;param-value&gt;/WEB-INF/flex/services-config.xml&lt;/param-value&gt;
+        &lt;/init-param&gt;
+        &lt;load-on-startup&gt;3&lt;/load-on-startup&gt;
+    &lt;/servlet&gt;
+    
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;action&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;*.do&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;
+    
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;s2container&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/s2container&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;
+    
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;MessageBrokerServlet&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/messagebroker/*&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;
+    
+    &lt;welcome-file-list&gt;
+    &lt;/welcome-file-list&gt;
+    
+    &lt;error-page&gt;
+        &lt;exception-type&gt;java.lang.Throwable&lt;/exception-type&gt;
+        &lt;location&gt;/error/debug.jsp&lt;/location&gt;
+    &lt;/error-page&gt;
+    
+    &lt;jsp-config&gt;
+        &lt;jsp-property-group&gt;
+            &lt;url-pattern&gt;*.jsp&lt;/url-pattern&gt;
+            &lt;el-ignored&gt;false&lt;/el-ignored&gt;
+            &lt;page-encoding&gt;UTF-8&lt;/page-encoding&gt;
+            &lt;scripting-invalid&gt;false&lt;/scripting-invalid&gt;
+            &lt;include-prelude&gt;/common/common.jsp&lt;/include-prelude&gt;
+        &lt;/jsp-property-group&gt;
+    &lt;/jsp-config&gt;
+&lt;/web-app&gt;
+</pre>
+<p>
+flex.class.pathは、ホットフィックス用みたいです。
+資料がなくて実体が良くわかりません。
+</p>
+<p>
+HttpFlexSessionは、FlexSession用のリスナです。
+</p>
+<p>
+EncodingFilterは、リクエストのパラメータをエンコードするためのフィルタです。
+</p>
+<p>
+S2ContainerFilterは、Seasar2がリクエストやレスポンスなどの
+サーブレット用のオブジェクトをあつかえるようにするためのフィルタです。
+</p>
+<p>
+HotdeployFilterは、Seasar2がJavaのクラスの変更をHOTに認識できるようにするためのフィルタです。
+</p>
+<p>
+RoutingFilterは、SAStruts用です。
+</p>
+<p>
+filterタグとfilter-mappingタグの順番は、非常に重要です。
+必ず上記の順序で定義するようにしてください。
+</p>
+<p>
+ActionServletは、Struts用のサーブレットです。
+</p>
+<p>
+S2ContainerServletは、Seasar2の初期化と終了処理を行なうためのサーブレットです。
+ActionServletよりも後に起動されるようにload-on-startupの値を
+ActionServletのload-on-startupの値より大きくしてください。
+</p>
+<p>
+MessageBrokerServletは、BlazeDSの起点となるサーブレットです。
+S2ContainerServletよりも後に起動されるようにload-on-startupの値を
+S2ContainerServletのload-on-startupの値より大きくしてください。
+</p>
+
+<h3><a name="services-config">services-config.xml</a></h3>
+<p>
+アプリケーションの起動時に最初に読み込まれるファイルがapp.diconです。
+app.diconは、クラスパスの通っているディレクトリにおきます。
+sa-struts-tutorialプロジェクトでは、src/main/resourcesに
+app.diconがあります。
+</p>
+
+<h3><a name="app">app.dicon</a></h3>
+<p>
+アプリケーションの起動時に最初に読み込まれるファイルがapp.diconです。
+app.diconは、クラスパスの通っているディレクトリにおきます。
+sa-struts-tutorialプロジェクトでは、src/main/resourcesに
+app.diconがあります。
+</p>
+<h5>app.dicon</h5>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+	"http://www.seasar.org/dtd/components24.dtd"&gt;
+&lt;components&gt;
+    &lt;include path="convention.dicon"/&gt;
+    &lt;include path="aop.dicon"/&gt;
+    &lt;include path="j2ee.dicon"/&gt;
+    &lt;include path="s2jdbc.dicon"/&gt;
+	
+    &lt;component name="actionMessagesThrowsInterceptor"
+        class="org.seasar.struts.interceptor.ActionMessagesThrowsInterceptor"/&gt;
+&lt;/components&gt;
+</pre>
+<p>
+ある設定ファイルから別の設定ファイルを読み込むためには、
+includeタグを使います。
+includeされている設定ファイルから、さらに別の設定ファイルをincludeすることができるので、
+app.diconをルートとして、設定ファイルのツリーが構成されます。
+</p>
+<p>
+<a href="#convention">convention.dicon</a>は規約を定義している設定ファイルです。
+</p>
+<p>
+aop.diconはトレースなどの良く使うインターセプタが定義されている設定ファイルで、
+s2-framework-xxx.jarの中に含まれています。
+インタセプタとは、メソッドの呼び出しの前後に自動的に呼び出されるAOPのモジュールです。
+AOPの詳細は、<a href="http://s2container.seasar.org/2.4/ja/aop.html">こちら</a>を参照してください。
+</p>
+<p>
+j2ee.diconはトランザクション用のインターセプタが定義されている設定ファイルで、
+s2-extension-xxx.jarの中に含まれています。
+</p>
+<p>
+<a href="#s2jdbc">s2jdbc.dicon</a>はS2JDBC用の設定ファイルです。
+</p>
+<p>
+<a href="featureReference.html#Action">アクション</a>以外から、
+ActionMessages(html:errors)にメッセージを出力するためのインターセプタが
+ActionMessagesThrowsInterceptorです。
+詳細は、<a href="featureReference.html#ValidateMethod">こちら</a>を参照してください。
+</p>
+
+<h3><a name="convention">convention.dicon</a></h3>
+<p>
+規約を定義しているのがconvention.diconです。
+convention.diconは、クラスパスの通っているディレクトリにおきます。
+sa-struts-tutorialプロジェクトでは、src/main/resourcesに
+convention.diconがあります。
+</p>
+<h5>convention.dicon</h5>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN" 
+    "http://www.seasar.org/dtd/components24.dtd"&gt;
+&lt;components&gt;
+    &lt;component
+        class="org.seasar.framework.convention.impl.NamingConventionImpl"&gt;
+        &lt;initMethod name="addRootPackageName"&gt;
+            &lt;arg&gt;<b>"tutorial"</b>&lt;/arg&gt;
+        &lt;/initMethod&gt;
+    &lt;/component&gt;
+    &lt;component
+        class="org.seasar.framework.convention.impl.PersistenceConventionImpl"/&gt;
+&lt;/components&gt;
+</pre>
+<p>
+addRootPackageNameで追加している<b>tutorial</b>の部分は、
+プロジェクトにあわせて書き換えてください。
+ルートパッケージの詳細は、<a href="featureReference.html#Project">こちら</a>を参照してください。
+</p>
+
+<h3><a name="env">env.txt</a></h3>
+<p>
+Seasar2が動作している環境を定義するファイルがenv.txtです。
+env.txtは、クラスパスの通っているディレクトリにおきます。
+sa-struts-tutorialプロジェクトでは、src/main/resourcesに
+env.txtがあります。
+</p>
+<p>
+デフォルトで定義されている環境は下記のとおりです。
+</p>
+<ul>
+<li>utは単体テスト用の環境です。</li>
+<li>ctは結合テスト用の環境です。</li>
+<li>itは統合テスト用の環境です。</li>
+<li>productは本番用の環境です。env.txtがない場合のデフォルトです。</li>
+</ul>
+<p>
+Seasar2がHOT deployで動作するのは、env.txtがctの場合です。
+sa-struts-tutorialプロジェクトでは、env.txtがctに設定されています。
+</p>
+<p>
+env.txtがitかproduct(設定無し)の場合、Seasar2はCOOL deployで動作します。
+COOL deployで動作している場合、Javaのクラスの変更をHOTに認識することはできませんが、
+アプリケーションの起動時にすべてのデプロイを完了させるので、
+アプリケーションがHOT deployに比べて高速に動作します。
+</p>
+<p>
+env.txtがutの場合、Seasar2はWARM deployで動作します。
+WARM deployで動作している場合、Javaのクラスの変更をHOTに認識せず、
+アプリケーションの起動時にもデプロイしません。
+ただし、デプロイした内容をキャッシュするので、
+一度利用したコンポーネントは高速に動作します。
+</p>
+<p>
+それに対し、HOT deployは、HOTに変更を認識するためにリクエストの終了時に
+デプロイした内容はすべて破棄して、
+リクエストのたびに必要とされるコンポーネントを再デプロイします。
+</p>
+<p>
+WARM deployのCOOL deployに対するメリットは、
+アプリケーションの起動が早いことです。
+例えば、COOL deployの場合、1つのテストケースのメソッドで1つしかコンポーネントを
+使わない場合でも、すべてのコンポーネントをデプロイしてしまいます。
+それに対し、WARM deployでは、必要なコンポーネントしかデプロイしないので、
+テストケースを高速に実行できます。
+また、テストの場合は、HOT deployは必要ありません。
+</p>
+
+<h3><a name="env_ut">env_ut.txt</a></h3>
+<p>
+<a href="http://s2container.seasar.org/2.4/ja/S2Unit.html">S2Unit</a>を使った
+単体テスト用の環境を定義するファイルがenv_ut.txtです。
+env_ut.txtは、クラスパスの通っているディレクトリにおきます。
+sa-struts-tutorialプロジェクトでは、src/main/resourcesに
+env_ut.txtがあり、値はutになっています。
+</p>
+
+<h3><a name="s2container">s2container.dicon</a></h3>
+<p>
+Seasar2自身をカスタマイズする設定ファイルがs2container.diconです。
+s2container.diconは、クラスパスの通っているディレクトリにおきます。
+sa-struts-tutorialプロジェクトでは、src/main/resourcesに
+s2container.diconがあります。
+</p>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN" 
+    "http://www.seasar.org/dtd/components24.dtd"&gt;
+&lt;components&gt;
+    &lt;include condition="#ENV == 'ut'" path="warmdeploy.dicon"/&gt;
+    &lt;include condition="#ENV == 'ct'" path="hotdeploy.dicon"/&gt;
+    &lt;include condition="#ENV != 'ut' and #ENV != 'ct'" path="cooldeploy.dicon"/&gt;
+&lt;/components&gt;
+</pre>
+<p>
+includeタグのcondition属性を使って、
+特定の条件に一致するときにファイルをincludeすることができます。
+#ENVは、env.txtの値です。
+条件は、<a href="http://s2container.seasar.org/2.4/ja/ognl.html">OGNL</a>で記述します。
+warmdeploy.dicon、hotdeploy.dicon、cooldeploy.diconは、
+s2-framework-xxx.jarの中に含まれています。
+</p>
+<p>
+env.txtの値で、Seasar2のデプロイの仕方が変化するのは、s2container.diconで実現されています。
+</p>
+
+<h3><a name="creator">creator.dicon</a></h3>
+<p>
+ルートパッケージ.actionなどにおいたJavaの設定情報を自動的に作成するための
+設定ファイルがcreator.diconです。
+creator.diconは、クラスパスの通っているディレクトリにおきます。
+sa-struts-tutorialプロジェクトでは、src/main/resourcesに
+creator.diconがあります。
+</p>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN" 
+    "http://www.seasar.org/dtd/components24.dtd"&gt;
+&lt;components&gt;
+    &lt;include path="convention.dicon"/&gt;
+    &lt;include path="customizer.dicon"/&gt;
+	
+    &lt;component
+        class="org.seasar.framework.container.creator.ActionCreator"/&gt;
+    &lt;component
+        class="org.seasar.framework.container.creator.LogicCreator"/&gt;
+    &lt;component
+        class="org.seasar.framework.container.creator.DtoCreator"/&gt;
+    &lt;component
+        class="org.seasar.framework.container.creator.InterceptorCreator"/&gt;
+&lt;/components&gt;
+</pre>
+<p>
+action、logic、dtoなどそれぞれのパッケージ応じたクリエータが登録されています。
+</p>
+
+<h3><a name="customizer">customizer.dicon</a></h3>
+<p>
+クリエータが作成した設定情報をカスタマイズするための
+設定ファイルがcustomizer.diconです。
+customizer.diconは、クラスパスの通っているディレクトリにおきます。
+sa-struts-tutorialプロジェクトでは、src/main/resourcesに
+customizer.diconがあります。
+</p>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN" 
+    "http://www.seasar.org/dtd/components24.dtd"&gt;
+&lt;components&gt;
+    &lt;include path="default-customizer.dicon"/&gt;
+	
+    &lt;component name="actionCustomizer"
+        class="org.seasar.framework.container.customizer.CustomizerChain"&gt;
+        &lt;initMethod name="addAspectCustomizer"&gt;
+            &lt;arg&gt;<b>"aop.traceInterceptor"</b>&lt;/arg&gt;
+        &lt;/initMethod&gt;
+        &lt;initMethod name="addAspectCustomizer"&gt;
+            &lt;arg&gt;<b>"actionMessagesThrowsInterceptor"</b>&lt;/arg&gt;
+        &lt;/initMethod&gt;
+        &lt;initMethod name="addCustomizer"&gt;
+            &lt;arg&gt;
+                &lt;component
+                    class=<b>"org.seasar.framework.container.customizer.TxAttributeCustomizer"</b>/&gt;
+            &lt;/arg&gt;
+        &lt;/initMethod&gt;
+        &lt;initMethod name="addCustomizer"&gt;
+            &lt;arg&gt;
+                &lt;component
+                    class=<b>"org.seasar.struts.customizer.ActionCustomizer"</b>/&gt;
+            &lt;/arg&gt;
+        &lt;/initMethod&gt;
+    &lt;/component&gt;
+	
+    &lt;component name="logicCustomizer"
+        class="org.seasar.framework.container.customizer.CustomizerChain"&gt;
+        &lt;initMethod name="addAspectCustomizer"&gt;
+            &lt;arg><b>"aop.traceInterceptor"</b>&lt;/arg&gt;
+        &lt;/initMethod&gt;
+        &lt;initMethod name="addCustomizer"&gt;
+            &lt;arg&gt;
+                &lt;component
+                    class=<b>"org.seasar.framework.container.customizer.TxAttributeCustomizer"</b>/&gt;
+            &lt;/arg&gt;
+        &lt;/initMethod&gt;
+    &lt;/component&gt;
+&lt;/components&gt;
+</pre>
+<p>
+<a href="featureReference.html#Action">アクション</a>やロジックの設定をカスタマイズするために
+actionCustomizerやlogicCustomizerが定義されています。
+</p>
+<p>
+aop.traceInterceptorはトレース用のログを出力するためのインターセプタで、
+aop.diconに定義されています。
+</p>
+<p>
+actionMessagesThrowsInterceptorは<a href="featureReference.html#Action">アクション</a>以外から、
+ActionMessages(html:errors)にメッセージを出力するためのインターセプタで、
+<a href="#app">app.dicon</a>に定義されています。
+</p>
+<p>
+TxAttributeCustomizerは、トランザクションを自動的に処理するためのカスタマイザです。
+詳細は、<a href="featureReference.html#Transaction">こちら</a>を参照してください。
+</p>
+<p>
+ActionCustomizerは、<a href="featureReference.html#Action">アクション</a>が
+デプロイされるときに、Struts用の設定情報を自動的に組み立てるクラスで、
+SAStrutsで最も重要なクラスです。
+</p>
+
+<h3><a name="jdbc">jdbc.dicon</a></h3>
+<p>
+データベース接続用の設定ファイルがjdbc.diconです。
+jdbc.diconは、クラスパスの通っているディレクトリにおきます。
+sa-struts-tutorialプロジェクトでは、src/main/resourcesに
+jdbc.diconがあります。
+</p>
+<p>
+jdbc.diconの詳細は、<a href="http://s2container.seasar.org/2.4/ja/jdbc.html">こちら</a>を参照してください。
+</p>
+
+<h3><a name="s2jdbc">s2jdbc.dicon</a></h3>
+<p>
+<a href="http://s2container.seasar.org/2.4/ja/s2jdbc.html">S2JDBC</a>
+用の設定ファイルがs2jdbc.diconです。
+s2jdbc.diconは、クラスパスの通っているディレクトリにおきます。
+sa-struts-tutorialプロジェクトでは、src/main/resourcesに
+s2jdbc.diconがあります。
+</p>
+<p>
+s2jdbc.diconの詳細は、<a href="http://s2container.seasar.org/2.4/ja/s2jdbc_setup.html">こちら</a>を参照してください。
+</p>
+
+<h3><a name="log4j">log4j.properties</a></h3>
+<p>
+<a href="http://logging.apache.org/log4j/">log4j</a>
+用の設定ファイルがlog4j.propertiesです。
+log4j.propertiesは、クラスパスの通っているディレクトリにおきます。
+sa-struts-tutorialプロジェクトでは、src/main/resourcesに
+log4j.propertiesがあります。
+</p>
+<pre>
+log4j.category.org.seasar=DEBUG, C
+log4j.additivity.org.seasar=false
+
+log4j.category.<b>tutorial</b>=DEBUG, C
+log4j.additivity.<b>tutorial</b>=false
+
+log4j.appender.C=org.apache.log4j.ConsoleAppender
+log4j.appender.C.Target=System.out
+log4j.appender.C.ImmediateFlush=true
+log4j.appender.C.layout=org.apache.log4j.PatternLayout
+log4j.appender.C.layout.ConversionPattern=%-5p %d [%t] %m%n
+
+log4j.rootLogger=INFO, A1
+log4j.appender.A1=org.apache.log4j.ConsoleAppender
+log4j.appender.A1.layout=org.apache.log4j.PatternLayout
+log4j.appender.A1.layout.ConversionPattern=%d [%t] %-5p %c - %m%n
+</pre>
+<p>
+tutorialの部分は、ルートパッケージ名を指定します。
+ルートパッケージの詳細は、<a href="featureReference.html#Project">こちら</a>を参照してください。
+</p>
+
+</div><!-- section -->
+
+</div><!-- article -->
+
+</div><!-- contents_center -->
+
+<div id="footer">
+<address>&copy; Copyright The Seasar Foundation and the others 2006, all rights reserved.</address>
+<div class="line"><span class="hide">spacer</span></div>
+</div><!-- footer -->
+
+</div><!-- wrapper -->
+
+</body>
+</html>
+
