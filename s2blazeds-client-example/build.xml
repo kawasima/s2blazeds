@@ -1,0 +1,20 @@
+<project name="s2blazeds-client-example" default="dist" basedir=".">
+	<property name="ver" value="1.0.0-rc1"/>
+	
+	<target name="dist">
+			<delete includeemptydirs="true" failonerror="false">
+				<fileset dir="target"/>
+			</delete>
+			<mkdir dir="target"/>
+			<zip zipfile="target/s2blazeds-client-example-${ver}.zip">
+				<zipfileset prefix="s2blazeds-client-example" dir=".">
+					<exclude name="target/**"/>
+					<exclude name="work/**"/>
+					<exclude name="**/.settings/**"/>
+					<exclude name="build.xml"/>
+					<exclude name="**/.DS_Store"/>
+				</zipfileset>
+			</zip>
+		</target>
+
+</project>
