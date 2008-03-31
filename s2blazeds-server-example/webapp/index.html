@@ -7,7 +7,7 @@
 <body>
 <p>
 このサンプルは、COOL deploy(修正を即座に認識しない)で動いています。
-プッシュ系の機能は、COOL deployでしか動作しないためです。
+データプッシュ系の機能は、COOL deployでしか動作しないためです。
 HOT deployに切り替えるときには、src/main/resources/env.txtの内容をctにしてください。
 </p>
 <ul>
@@ -276,16 +276,16 @@ s2blazeds-client-exampleプロジェクトのsrc/chatmain.mxmlをみてみまし
 &lt;/mx:Application&gt;
 </pre>
 <p>
-RemoteObjectタグを使って、WebServiceを呼び出すことができます。
-destination属性でSeasar2で管理されているコンポーネント名を指定します。
+Producerタグを使って、メッセージを送信することができます。
+destination属性で宛先を指定します。
 </p>
 <p>
-Buttonタグのclick属性でsrv.getProducts()のように呼び出すと
-ProductService#getProducts()を呼び出すことができます。
+Consumerタグを使って、メッセージを受信することができます。
+destination属性で宛先を指定します。
+実際にメッセージが受信できるようになるのは、consumer.subscribe()を呼び出した後です。
 </p>
 <p>
-RemoteObjectは非同期呼び出しになります。
-srv.getProducts()の結果は、非同期でsrc.getProducts.lastResultに格納されます。
+メッセージの宛先は、WEB-INF/flex/messaging-config.xmlで定義されています。
 </p>
 </body>
 </html>
