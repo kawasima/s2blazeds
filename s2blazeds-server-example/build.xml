@@ -20,8 +20,8 @@
 				<fileset dir="target"/>
 			</delete>
 			<mkdir dir="target"/>
-			<zip zipfile="target/sa-struts-tutorial-${ver}.zip">
-				<zipfileset prefix="sa-struts-tutorial" dir=".">
+			<zip zipfile="target/s2blazeds-server-example-${ver}.zip">
+				<zipfileset prefix="s2blazeds-server-example" dir=".">
 					<exclude name="target/**"/>
 					<exclude name="work/**"/>
 					<exclude name="**/.settings/**"/>
