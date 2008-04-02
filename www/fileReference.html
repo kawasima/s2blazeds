@@ -58,6 +58,9 @@
 	    <ul>
 			<li><a href="#web">web.xml</a></li>
 			<li><a href="#services-config">services-config.xml</a></li>
+			<li><a href="#remoting-config">remoting-config.xml</a></li>
+			<li><a href="#messaging-config">messaging-config.xml</a></li>
+			<li><a href="#proxy-config">proxy-config.xml</a></li>
 			<li><a href="#app">app.dicon</a></li>
 			<li><a href="#convention">convention.dicon</a></li>
 			<li><a href="#env">env.txt</a></li>
@@ -282,17 +285,97 @@ S2ContainerServletのload-on-startupの値より大きくしてください。
 
 <h3><a name="services-config">services-config.xml</a></h3>
 <p>
-アプリケーションの起動時に最初に読み込まれるファイルがapp.diconです。
-app.diconは、クラスパスの通っているディレクトリにおきます。
-sa-struts-tutorialプロジェクトでは、src/main/resourcesに
-app.diconがあります。
+MessageBrokerServletが最初に読み込むファイルがWEB-INF/flex/services-config.xmlです。
+Seasar2用にmy-amfのEndpointをS2AMFEndpointに書き換えます。
 </p>
+<pre>
+&lt;services-config&gt;
+    ...
+    &lt;channels&gt;
+        ...
+        &lt;channel-definition id="my-amf" class="mx.messaging.channels.AMFChannel"&gt;
+            &lt;endpoint url="http://{server.name}:{server.port}/{context.root}/messagebroker/amf"
+                class=<b>"org.seasar.blazeds.endpoints.S2AMFEndpoint"</b>/&gt;
+        &lt;/channel-definition&gt;
+        ...
+    &lt;/channels&gt;
+    ...
+&lt;/services-config&gt;
+</pre>
+
+<h3><a name="remoting-config">remoting-config.xml</a></h3>
+<p>
+services-config.xmlのservice-includeタグ経由で読み込まれるファイルが
+WEB-INF/flex/remoting-config.xmlです。
+Seasar2用にjava-objectのadapter-definitionをコメントアウトして、
+s2-objectのadapter-definitionを追加します。
+</p>
+<pre>
+&lt;service id="remoting-service"
+    class="flex.messaging.services.RemotingService"&gt;
+
+    &lt;adapters&gt;
+    &lt;!--
+        &lt;adapter-definition id="java-object"
+            class="flex.messaging.services.remoting.adapters.JavaAdapter"
+            default="true"/&gt; 
+    -->
+        &lt;adapter-definition id="s2-object"
+            class=<b>"org.seasar.blazeds.adapters.S2Adapter"</b>
+            default="true"/&gt;
+    &lt;/adapters&gt;
+
+    &lt;default-channels&gt;
+        &lt;channel ref="my-amf"/&gt;
+    &lt;/default-channels&gt;
+    
+&lt;/service&gt;
+</pre>
+
+<h3><a name="messaging-config">messaging-config.xml</a></h3>
+<p>
+services-config.xmlのservice-includeタグ経由で読み込まれるファイルが
+WEB-INF/flex/messaging-config.xmlです。
+Seasar2用の設定は特に必要ありません。
+メッセージの送信先・受信元をdestinationタグで定義します。
+</p>
+<pre>
+&lt;service id="message-service"
+    class="flex.messaging.services.MessageService"&gt;
+    ...
+    &lt;destination id="feed"/&gt;
+
+    &lt;destination id="chat"/&gt;
+    
+&lt;/service&gt;
+</pre>
+
+<h3><a name="proxy-config">proxy-config.xml</a></h3>
+<p>
+services-config.xmlのservice-includeタグ経由で読み込まれるファイルが
+WEB-INF/flex/proxy-config.xmlです。
+DefaultHTTPの定義に、dynamic-urlタグを追加します。
+*を指定することで、FlexのHTTPServiceタグのurl属性や
+WebServiceタグのwsdl属性で指定した値でそのまま外部にアクセスすることができます。
+</p>
+<pre>
+&lt;service id="proxy-service"
+    class="flex.messaging.services.HTTPProxyService"&gt;
+    ...
+    &lt;destination id="DefaultHTTP"&gt;
+        &lt;properties&gt;
+            &lt;dynamic-url&gt;*&lt;/dynamic-url&gt;
+        &lt;/properties&gt;
+    &lt;/destination&gt;
+    ...
+&lt;/service&gt;
+</pre>
 
 <h3><a name="app">app.dicon</a></h3>
 <p>
-アプリケーションの起動時に最初に読み込まれるファイルがapp.diconです。
+Seasar2アプリケーションの起動時に最初に読み込まれるファイルがapp.diconです。
 app.diconは、クラスパスの通っているディレクトリにおきます。
-sa-struts-tutorialプロジェクトでは、src/main/resourcesに
+s2blazeds-server-exampleプロジェクトでは、src/main/resourcesに
 app.diconがあります。
 </p>
 <h5>app.dicon</h5>
@@ -333,17 +416,17 @@ s2-extension-xxx.jarの中に含まれています。
 <a href="#s2jdbc">s2jdbc.dicon</a>はS2JDBC用の設定ファイルです。
 </p>
 <p>
-<a href="featureReference.html#Action">アクション</a>以外から、
+SAStrutsで<a href="http://sastruts.seasar.org/featureReference.html#Action">アクション</a>以外から、
 ActionMessages(html:errors)にメッセージを出力するためのインターセプタが
 ActionMessagesThrowsInterceptorです。
-詳細は、<a href="featureReference.html#ValidateMethod">こちら</a>を参照してください。
+詳細は、<a href="http://sastruts.seasar.org/featureReference.html#ValidateMethod">こちら</a>を参照してください。
 </p>
 
 <h3><a name="convention">convention.dicon</a></h3>
 <p>
 規約を定義しているのがconvention.diconです。
 convention.diconは、クラスパスの通っているディレクトリにおきます。
-sa-struts-tutorialプロジェクトでは、src/main/resourcesに
+s2blazeds-server-exampleプロジェクトでは、src/main/resourcesに
 convention.diconがあります。
 </p>
 <h5>convention.dicon</h5>
@@ -355,7 +438,7 @@ convention.diconがあります。
     &lt;component
         class="org.seasar.framework.convention.impl.NamingConventionImpl"&gt;
         &lt;initMethod name="addRootPackageName"&gt;
-            &lt;arg&gt;<b>"tutorial"</b>&lt;/arg&gt;
+            &lt;arg&gt;<b>"flex.samples"</b>&lt;/arg&gt;
         &lt;/initMethod&gt;
     &lt;/component&gt;
     &lt;component
@@ -363,7 +446,7 @@ convention.diconがあります。
 &lt;/components&gt;
 </pre>
 <p>
-addRootPackageNameで追加している<b>tutorial</b>の部分は、
+addRootPackageNameで追加している<b>flex.samples</b>の部分は、
 プロジェクトにあわせて書き換えてください。
 ルートパッケージの詳細は、<a href="featureReference.html#Project">こちら</a>を参照してください。
 </p>
@@ -372,7 +455,7 @@ addRootPackageNameで追加している<b>tutorial</b>の部分は、
 <p>
 Seasar2が動作している環境を定義するファイルがenv.txtです。
 env.txtは、クラスパスの通っているディレクトリにおきます。
-sa-struts-tutorialプロジェクトでは、src/main/resourcesに
+s2blazeds-server-exampleプロジェクトでは、src/main/resourcesに
 env.txtがあります。
 </p>
 <p>
@@ -386,7 +469,7 @@ env.txtがあります。
 </ul>
 <p>
 Seasar2がHOT deployで動作するのは、env.txtがctの場合です。
-sa-struts-tutorialプロジェクトでは、env.txtがctに設定されています。
+s2blazeds-server-exampleプロジェクトでは、env.txtがctに設定されています。
 </p>
 <p>
 env.txtがitかproduct(設定無し)の場合、Seasar2はCOOL deployで動作します。
@@ -415,13 +498,17 @@ WARM deployのCOOL deployに対するメリットは、
 テストケースを高速に実行できます。
 また、テストの場合は、HOT deployは必要ありません。
 </p>
+<p style="background-color:red">
+データプッシュを使う場合には、HOT deployを使うことができません。
+COOL deployかWARM deployを使うようにしてください。
+</p>
 
 <h3><a name="env_ut">env_ut.txt</a></h3>
 <p>
 <a href="http://s2container.seasar.org/2.4/ja/S2Unit.html">S2Unit</a>を使った
 単体テスト用の環境を定義するファイルがenv_ut.txtです。
 env_ut.txtは、クラスパスの通っているディレクトリにおきます。
-sa-struts-tutorialプロジェクトでは、src/main/resourcesに
+s2blazeds-server-exampleプロジェクトでは、src/main/resourcesに
 env_ut.txtがあり、値はutになっています。
 </p>
 
@@ -429,7 +516,7 @@ env_ut.txtがあり、値はutになっています。
 <p>
 Seasar2自身をカスタマイズする設定ファイルがs2container.diconです。
 s2container.diconは、クラスパスの通っているディレクトリにおきます。
-sa-struts-tutorialプロジェクトでは、src/main/resourcesに
+s2blazeds-server-exampleプロジェクトでは、src/main/resourcesに
 s2container.diconがあります。
 </p>
 <pre>
@@ -456,10 +543,10 @@ env.txtの値で、Seasar2のデプロイの仕方が変化するのは、s2cont
 
 <h3><a name="creator">creator.dicon</a></h3>
 <p>
-ルートパッケージ.actionなどにおいたJavaの設定情報を自動的に作成するための
+ルートパッケージ.serviceなどにおいたJavaの設定情報を自動的に作成するための
 設定ファイルがcreator.diconです。
 creator.diconは、クラスパスの通っているディレクトリにおきます。
-sa-struts-tutorialプロジェクトでは、src/main/resourcesに
+s2blazeds-server-exampleプロジェクトでは、src/main/resourcesに
 creator.diconがあります。
 </p>
 <pre>
@@ -473,6 +560,8 @@ creator.diconがあります。
     &lt;component
         class="org.seasar.framework.container.creator.ActionCreator"/&gt;
     &lt;component
+        class="org.seasar.framework.container.creator.ServiceCreator"/&gt;
+    &lt;component
         class="org.seasar.framework.container.creator.LogicCreator"/&gt;
     &lt;component
         class="org.seasar.framework.container.creator.DtoCreator"/&gt;
@@ -481,7 +570,7 @@ creator.diconがあります。
 &lt;/components&gt;
 </pre>
 <p>
-action、logic、dtoなどそれぞれのパッケージ応じたクリエータが登録されています。
+action、service、logic、dtoなどそれぞれのパッケージ応じたクリエータが登録されています。
 </p>
 
 <h3><a name="customizer">customizer.dicon</a></h3>
@@ -489,7 +578,7 @@ action、logic、dtoなどそれぞれのパッケージ応じたクリエータ
 クリエータが作成した設定情報をカスタマイズするための
 設定ファイルがcustomizer.diconです。
 customizer.diconは、クラスパスの通っているディレクトリにおきます。
-sa-struts-tutorialプロジェクトでは、src/main/resourcesに
+s2blazeds-server-exampleプロジェクトでは、src/main/resourcesに
 customizer.diconがあります。
 </p>
 <pre>
@@ -521,6 +610,19 @@ customizer.diconがあります。
         &lt;/initMethod&gt;
     &lt;/component&gt;
 	
+	&lt;component name="serviceCustomizer"
+        class="org.seasar.framework.container.customizer.CustomizerChain"&gt;
+        &lt;initMethod name="addAspectCustomizer"&gt;
+            &lt;arg><b>"aop.traceInterceptor"</b>&lt;/arg&gt;
+        &lt;/initMethod&gt;
+        &lt;initMethod name="addCustomizer"&gt;
+            &lt;arg&gt;
+                &lt;component
+                    class=<b>"org.seasar.framework.container.customizer.TxAttributeCustomizer"</b>/&gt;
+            &lt;/arg&gt;
+        &lt;/initMethod&gt;
+    &lt;/component&gt;
+    
     &lt;component name="logicCustomizer"
         class="org.seasar.framework.container.customizer.CustomizerChain"&gt;
         &lt;initMethod name="addAspectCustomizer"&gt;
@@ -536,15 +638,15 @@ customizer.diconがあります。
 &lt;/components&gt;
 </pre>
 <p>
-<a href="featureReference.html#Action">アクション</a>やロジックの設定をカスタマイズするために
-actionCustomizerやlogicCustomizerが定義されています。
+アクション、サービス、ロジックの設定をカスタマイズするために
+actionCustomizer、serviceCustomizer、logicCustomizerが定義されています。
 </p>
 <p>
 aop.traceInterceptorはトレース用のログを出力するためのインターセプタで、
 aop.diconに定義されています。
 </p>
 <p>
-actionMessagesThrowsInterceptorは<a href="featureReference.html#Action">アクション</a>以外から、
+actionMessagesThrowsInterceptorはActionMessagesExceptionをキャッチして、
 ActionMessages(html:errors)にメッセージを出力するためのインターセプタで、
 <a href="#app">app.dicon</a>に定義されています。
 </p>
@@ -553,16 +655,14 @@ TxAttributeCustomizerは、トランザクションを自動的に処理する�
 詳細は、<a href="featureReference.html#Transaction">こちら</a>を参照してください。
 </p>
 <p>
-ActionCustomizerは、<a href="featureReference.html#Action">アクション</a>が
-デプロイされるときに、Struts用の設定情報を自動的に組み立てるクラスで、
-SAStrutsで最も重要なクラスです。
+ActionCustomizerは、アクションがデプロイされるときに、Struts用の設定情報を自動的に組み立てるクラスです。
 </p>
 
 <h3><a name="jdbc">jdbc.dicon</a></h3>
 <p>
 データベース接続用の設定ファイルがjdbc.diconです。
 jdbc.diconは、クラスパスの通っているディレクトリにおきます。
-sa-struts-tutorialプロジェクトでは、src/main/resourcesに
+s2blazeds-server-exampleプロジェクトでは、src/main/resourcesに
 jdbc.diconがあります。
 </p>
 <p>
@@ -574,7 +674,7 @@ jdbc.diconの詳細は、<a href="http://s2container.seasar.org/2.4/ja/jdbc.html
 <a href="http://s2container.seasar.org/2.4/ja/s2jdbc.html">S2JDBC</a>
 用の設定ファイルがs2jdbc.diconです。
 s2jdbc.diconは、クラスパスの通っているディレクトリにおきます。
-sa-struts-tutorialプロジェクトでは、src/main/resourcesに
+s2blazeds-server-exampleプロジェクトでは、src/main/resourcesに
 s2jdbc.diconがあります。
 </p>
 <p>
@@ -586,15 +686,15 @@ s2jdbc.diconの詳細は、<a href="http://s2container.seasar.org/2.4/ja/s2jdbc_
 <a href="http://logging.apache.org/log4j/">log4j</a>
 用の設定ファイルがlog4j.propertiesです。
 log4j.propertiesは、クラスパスの通っているディレクトリにおきます。
-sa-struts-tutorialプロジェクトでは、src/main/resourcesに
+s2blazeds-server-exampleプロジェクトでは、src/main/resourcesに
 log4j.propertiesがあります。
 </p>
 <pre>
 log4j.category.org.seasar=DEBUG, C
 log4j.additivity.org.seasar=false
 
-log4j.category.<b>tutorial</b>=DEBUG, C
-log4j.additivity.<b>tutorial</b>=false
+log4j.category.<b>flex.samples</b>=DEBUG, C
+log4j.additivity.<b>flex.samples</b>=false
 
 log4j.appender.C=org.apache.log4j.ConsoleAppender
 log4j.appender.C.Target=System.out
@@ -608,7 +708,7 @@ log4j.appender.A1.layout=org.apache.log4j.PatternLayout
 log4j.appender.A1.layout.ConversionPattern=%d [%t] %-5p %c - %m%n
 </pre>
 <p>
-tutorialの部分は、ルートパッケージ名を指定します。
+flex.samplesの部分は、ルートパッケージ名を指定します。
 ルートパッケージの詳細は、<a href="featureReference.html#Project">こちら</a>を参照してください。
 </p>
 
