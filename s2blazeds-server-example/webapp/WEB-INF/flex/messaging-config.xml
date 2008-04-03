@@ -11,13 +11,7 @@
 		<channel ref="my-polling-amf"/>
     </default-channels>
 
-    <destination id="feed">
-    	<!--
-    	<channels>
-            <channel ref="my-streaming-amf"/>
-        </channels>
-        -->        
-    </destination>
+    <destination id="feed"/>
 
     <destination id="chat"/>
 
