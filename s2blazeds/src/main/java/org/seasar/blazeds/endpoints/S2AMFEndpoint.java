@@ -17,8 +17,11 @@ package org.seasar.blazeds.endpoints;
 
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
+import org.seasar.framework.util.Disposable;
+import org.seasar.framework.util.DisposableUtil;
 
 import flex.messaging.endpoints.AMFEndpoint;
+import flex.messaging.io.PropertyProxyRegistry;
 import flex.messaging.messages.Message;
 import flex.messaging.services.RemotingService;
 import flex.messaging.services.remoting.RemotingDestination;
@@ -29,7 +32,12 @@ import flex.messaging.services.remoting.RemotingDestination;
  * @author higa
  * 
  */
-public class S2AMFEndpoint extends AMFEndpoint {
+public class S2AMFEndpoint extends AMFEndpoint implements Disposable {
+
+	/**
+	 * 破棄処理が登録されたかどうかです。
+	 */
+	protected boolean registered = false;
 
 	/**
 	 * コンストラクタです。
@@ -45,23 +53,40 @@ public class S2AMFEndpoint extends AMFEndpoint {
 	 */
 	public S2AMFEndpoint(boolean enableManagement) {
 		super(enableManagement);
+		registerDisposable();
+	}
+
+	/**
+	 * 破棄処理を登録します。
+	 */
+	public void registerDisposable() {
+		DisposableUtil.add(this);
+		registered = true;
+	}
+
+	public void dispose() {
+		PropertyProxyRegistry.getRegistry().clear();
+		registered = false;
 	}
 
 	public Message serviceMessage(Message message) {
+		if (!registered) {
+			registerDisposable();
+		}
 		S2Container container = SingletonS2ContainerFactory.getContainer();
 		if (container.hasComponentDef(message.getDestination())) {
 			RemotingService remotingService = (RemotingService) getMessageBroker()
-					.getService("remoting-service");
+				.getService("remoting-service");
 			synchronized (remotingService) {
 				RemotingDestination destination = (RemotingDestination) remotingService
-						.getDestination(message.getDestination());
+					.getDestination(message.getDestination());
 				if (destination == null) {
 					destination = (RemotingDestination) remotingService
-							.createDestination(message.getDestination());
+						.createDestination(message.getDestination());
 					destination.setChannels(remotingService
-							.getDefaultChannels());
+						.getDefaultChannels());
 					destination.createAdapter(remotingService
-							.getDefaultAdapter());
+						.getDefaultAdapter());
 					remotingService.addDestination(destination);
 					destination.start();
 				}

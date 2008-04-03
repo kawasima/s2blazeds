@@ -3,10 +3,10 @@
 	<property name="src" value="src/main/java" />
 	<property name="resources" value="src/main/resources" />
 	<property name="build" value="build/classes" />
-	<property name="ver" value="rc1" />
+	<property name="ver" value="1.0.0-rc1" />
 
 	<property name="jarfile" value="s2blazeds-${ver}.jar" />
-	<property name="srcfile" value="s2blazeds-${ver}-sources.zip" />
+	<property name="srcfile" value="s2blazeds-${ver}-sources.jar" />
 	<property name="releasefile" value="s2blazeds-${ver}.zip" />
 	
 	<property name="lib" value="lib" />
@@ -16,7 +16,7 @@
 	</fileset>
 
 	<target name="compile">
-		<javac srcdir="${src}" destdir="${build}" debug="on">
+		<javac srcdir="${src}" destdir="${build}" debug="on" encoding="UTF-8">
 			<classpath>
 				<fileset refid="classpath" />
 			</classpath>
@@ -42,7 +42,7 @@
 
 	<target name="dist" depends="compile,copy,clean">
 		<jar jarfile="target/${jarfile}" basedir="${build}"/>
-		<zip zipfile="target/${srcfile}" basedir="${src}"/>
+		<jar jarfile="target/${srcfile}" basedir="${src}"/>
 	</target>
 
 	<target name="release" depends="dist">
