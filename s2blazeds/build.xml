@@ -1,58 +1,26 @@
 <project name="s2blazeds" default="dist" basedir=".">
 
-	<property name="src" value="src/main/java" />
-	<property name="resources" value="src/main/resources" />
-	<property name="build" value="build/classes" />
 	<property name="ver" value="1.0.0-rc1" />
 
-	<property name="jarfile" value="s2blazeds-${ver}.jar" />
-	<property name="srcfile" value="s2blazeds-${ver}-sources.jar" />
-	<property name="releasefile" value="s2blazeds-${ver}.zip" />
-	
-	<property name="lib" value="lib" />
-
-	<fileset id="classpath" dir="${lib}">
-		<include name="*" />
-	</fileset>
-
-	<target name="compile">
-		<javac srcdir="${src}" destdir="${build}" debug="on" encoding="UTF-8">
-			<classpath>
-				<fileset refid="classpath" />
-			</classpath>
-		</javac>
-	</target>
-
-	<target name="copy" depends="compile">
-		<copy todir="${build}">
-			<fileset dir="${resources}">
-				<include name="*" />
-			</fileset>
-		</copy>
-	</target>
-	
-	<target name="clean">
-		<delete>
-			<fileset dir="target" defaultexcludes="no">
-				<include name="*.*" />
-			</fileset>
-		</delete>
-	</target>
-
-
-	<target name="dist" depends="compile,copy,clean">
-		<jar jarfile="target/${jarfile}" basedir="${build}"/>
-		<jar jarfile="target/${srcfile}" basedir="${src}"/>
-	</target>
-
-	<target name="release" depends="dist">
-		<zip zipfile="target/${releasefile}">
-			<zipfileset prefix="s2blazeds" dir="target">
-				<include name="${jarfile}"/>
-				<include name="${srcfile}"/>
-			</zipfileset>
-		</zip>
-	</target>
+    <target name="dist">
+        <mkdir dir="target"/>
+        <zip zipfile="target/s2blazeds-${ver}.zip">
+            <zipfileset prefix="s2blazeds" dir=".">
+                <exclude name="**/target/**"/>
+                <exclude name="**/.settings/**"/>
+            </zipfileset>
+            <zipfileset prefix="s2blazeds/lib" dir="target">
+                <include name="s2blazeds-${ver}.jar"/>
+            </zipfileset>
+            <zipfileset prefix="s2blazeds/libsrc" dir="target">
+                <include name="s2blazeds-${ver}-sources.jar"/>
+            </zipfileset>
+            <zipfileset prefix="s2blazeds/doc" dir="../s2blazeds-www">
+                <exclude name="**/download/**"/>
+                <exclude name=".project"/>
+            </zipfileset>
+	    </zip>
+    </target>
 
 </project>
 
