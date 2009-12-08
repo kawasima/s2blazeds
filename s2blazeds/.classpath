@@ -6,10 +6,10 @@
 	<classpathentry kind="src" output="build/test-classes" path="src/test/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 	<classpathentry kind="lib" path="lib/s2-framework-2.4.23.jar" sourcepath="lib/sources/s2-framework-2.4.23-sources.jar"/>
-	<classpathentry kind="lib" path="lib/blazeds-common-3.0.0.544.jar" sourcepath="lib/sources/blazeds-common-3.0.0.544-sources.zip"/>
-	<classpathentry kind="lib" path="lib/blazeds-core-3.0.0.544.jar" sourcepath="lib/sources/blazeds-core-3.0.0.544-sources.zip"/>
-	<classpathentry kind="lib" path="lib/blazeds-opt-3.0.0.544.jar" sourcepath="lib/sources/blazeds-opt-3.0.0.544-sources.zip"/>
-	<classpathentry kind="lib" path="lib/blazeds-proxy-3.0.0.544.jar" sourcepath="lib/sources/blazeds-proxy-3.0.0.544-sources.zip"/>
-	<classpathentry kind="lib" path="lib/blazeds-remoting-3.0.0.544.jar" sourcepath="lib/sources/blazeds-remoting-3.0.0.544-sources.zip"/>
+	<classpathentry kind="lib" path="lib/blazeds-common-3.2.0.3978.jar" sourcepath="lib/sources/blazeds-common-3.0.0.544-sources.zip"/>
+	<classpathentry kind="lib" path="lib/blazeds-core-3.2.0.3978.jar" sourcepath="lib/sources/blazeds-core-3.0.0.544-sources.zip"/>
+	<classpathentry kind="lib" path="lib/blazeds-opt-3.2.0.3978.jar" sourcepath="lib/sources/blazeds-opt-3.0.0.544-sources.zip"/>
+	<classpathentry kind="lib" path="lib/blazeds-proxy-3.2.0.3978.jar" sourcepath="lib/sources/blazeds-proxy-3.0.0.544-sources.zip"/>
+	<classpathentry kind="lib" path="lib/blazeds-remoting-3.2.0.3978.jar" sourcepath="lib/sources/blazeds-remoting-3.0.0.544-sources.zip"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
