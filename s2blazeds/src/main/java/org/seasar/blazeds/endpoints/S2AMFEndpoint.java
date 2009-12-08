@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2008 the Seasar Foundation and the Others.
+ * Copyright 2004-2009 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.util.Disposable;
 import org.seasar.framework.util.DisposableUtil;
 
+import flex.messaging.client.FlexClient;
 import flex.messaging.endpoints.AMFEndpoint;
 import flex.messaging.io.PropertyProxyRegistry;
 import flex.messaging.messages.Message;
@@ -54,6 +55,26 @@ public class S2AMFEndpoint extends AMFEndpoint implements Disposable {
 	public S2AMFEndpoint(boolean enableManagement) {
 		super(enableManagement);
 		registerDisposable();
+	}
+	/**
+	 * FlexClientのセットアップをします。
+	 * 
+	 * @param id
+	 *            生成するFlexクライアントID
+	 */
+	public FlexClient setupFlexClient(String id) {
+		FlexClient flexClient = null;
+		if(id != null) {
+			if(id.equals("nil")) {
+				id = null;
+			}
+			
+			flexClient = getMessageBroker().getFlexClientManager().getFlexClient(id);
+//			FlexSession session = FlexContext.getFlexSession();
+//			flexClient.registerFlexSession(session);
+//			FlexContext.setThreadLocalFlexClient(flexClient);
+		}
+		return flexClient;
 	}
 
 	/**
