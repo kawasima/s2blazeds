@@ -8,7 +8,7 @@
   <artifactId>s2blazeds</artifactId>
   <packaging>jar</packaging>
   <name>s2blazeds</name>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.1</version>
   <description></description>
   <url>http://s2blazeds.seasar.org/</url>
   <issueManagement>
@@ -121,35 +121,35 @@
     <dependency>
       <groupId>com.adobe.blazeds</groupId>
       <artifactId>blazeds-common</artifactId>
-      <version>3.0.0.544</version>
+      <version>3.2.0.3978</version>
       <type>jar</type>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.adobe.blazeds</groupId>
       <artifactId>blazeds-core</artifactId>
-      <version>3.0.0.544</version>
+      <version>3.2.0.3978</version>
       <type>jar</type>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.adobe.blazeds</groupId>
       <artifactId>blazeds-remoting</artifactId>
-      <version>3.0.0.544</version>
+      <version>3.2.0.3978</version>
       <type>jar</type>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.adobe.blazeds</groupId>
       <artifactId>blazeds-opt</artifactId>
-      <version>3.0.0.544</version>
+      <version>3.2.0.3978</version>
       <type>jar</type>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.adobe.blazeds</groupId>
       <artifactId>blazeds-proxy</artifactId>
-      <version>3.0.0.544</version>
+      <version>3.2.0.3978</version>
       <type>jar</type>
       <scope>provided</scope>
     </dependency>
