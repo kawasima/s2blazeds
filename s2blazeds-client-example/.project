@@ -19,7 +19,7 @@
 		<link>
 			<name>bin-debug</name>
 			<type>2</type>
-			<location>D:/USER/workspace2/s2blazeds-server-example/webapp/s2blazeds-client-example-debug</location>
+			<location>C:/dev/workspace/s2blazeds-server-example/webapp/s2blazeds-client-example-debug</location>
 		</link>
 	</linkedResources>
 </projectDescription>
