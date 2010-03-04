@@ -86,13 +86,13 @@
 <h2>設定ファイルリファレンス</h2>
 
 <p>
-SAStrutsで使われている設定ファイルの説明をします。
+S2BlazeDSで使われている設定ファイルの説明をします。
 </p>
 
 <h3><a name="web">web.xml</a></h3>
 <p>
 サーブレットコンテナ用の設定ファイルです。WEB-INFにおきます。
-sa-struts-tutorialプロジェクトでは、webapp/WEB-INFにあります。
+s2blazeds-server-exampleプロジェクトでは、webapp/WEB-INFにあります。
 </p>
 <pre>
 &lt;?xml version="1.0"?&gt;
@@ -124,16 +124,16 @@ sa-struts-tutorialプロジェクトでは、webapp/WEB-INFにあります。
     &lt;/filter&gt;
 
     &lt;filter&gt;
-        &lt;filter-name&gt;s2filter&lt;/filter-name&gt;
+        &lt;filter-name&gt;hotdeployfilter&lt;/filter-name&gt;
         &lt;filter-class&gt;
-            <b>org.seasar.framework.container.filter.S2ContainerFilter</b>
+            <b>org.seasar.framework.container.hotdeploy.HotdeployFilter</b>
         &lt;/filter-class&gt;
     &lt;/filter&gt;
 
     &lt;filter&gt;
-        &lt;filter-name&gt;hotdeployfilter&lt;/filter-name&gt;
+        &lt;filter-name&gt;s2filter&lt;/filter-name&gt;
         &lt;filter-class&gt;
-            <b>org.seasar.framework.container.hotdeploy.HotdeployFilter</b>
+            <b>org.seasar.framework.container.filter.S2ContainerFilter</b>
         &lt;/filter-class&gt;
     &lt;/filter&gt;
 
@@ -153,8 +153,9 @@ sa-struts-tutorialプロジェクトでは、webapp/WEB-INFにあります。
         &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
     &lt;/filter-mapping&gt;
 
+
     &lt;filter-mapping&gt;
-        &lt;filter-name&gt;s2filter&lt;/filter-name&gt;
+        &lt;filter-name&gt;hotdeployfilter&lt;/filter-name&gt;
         &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
         &lt;dispatcher&gt;REQUEST&lt;/dispatcher&gt;
         &lt;dispatcher&gt;FORWARD&lt;/dispatcher&gt;
@@ -162,7 +163,7 @@ sa-struts-tutorialプロジェクトでは、webapp/WEB-INFにあります。
     &lt;/filter-mapping&gt;
 
     &lt;filter-mapping&gt;
-        &lt;filter-name&gt;hotdeployfilter&lt;/filter-name&gt;
+        &lt;filter-name&gt;s2filter&lt;/filter-name&gt;
         &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
         &lt;dispatcher&gt;REQUEST&lt;/dispatcher&gt;
         &lt;dispatcher&gt;FORWARD&lt;/dispatcher&gt;
@@ -264,14 +265,16 @@ S2ContainerFilterは、Seasar2がリクエストやレスポンスなどの
 HotdeployFilterは、Seasar2がJavaのクラスの変更をHOTに認識できるようにするためのフィルタです。
 </p>
 <p>
-RoutingFilterは、SAStruts用です。
-</p>
-<p>
 filterタグとfilter-mappingタグの順番は、非常に重要です。
 必ず上記の順序で定義するようにしてください。
 </p>
 <p>
-ActionServletは、Struts用のサーブレットです。
+Seasar.2.4.34以前では上記の通りS2ContainerFilter,HotDeployFilterの順序で定義します。
+</p>
+<p style="background-color:red">
+
+Seasar2.4.35以降の場合はweb.xmlでHotDeployFilter,S2ContainerFilterの順でfilterを適用してください。
+
 </p>
 <p>
 S2ContainerServletは、Seasar2の初期化と終了処理を行なうためのサーブレットです。
