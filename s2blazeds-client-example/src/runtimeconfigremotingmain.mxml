@@ -4,6 +4,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import mx.messaging.channels.SecureAMFChannel;
 			import mx.rpc.remoting.mxml.RemoteObject;
 			import mx.messaging.ChannelSet;
 			import mx.messaging.channels.AMFChannel;
@@ -11,11 +12,15 @@
 			[Bindable]
 			private var srv:RemoteObject;
 			
+			
+			
 			private function initApp():void
 			{
 				var channel:AMFChannel = new AMFChannel("my-amf", "../messagebroker/amf");
+				var securechannel:SecureAMFChannel = new SecureAMFChannel("my-secure-amf", "../messagebroker/amfsecure");
 				var channelSet:ChannelSet = new ChannelSet();
 				channelSet.addChannel(channel);
+				channelSet.addChannel(securechannel);
 				srv = new RemoteObject();
 				srv.destination="employeeService";	
 				srv.channelSet = channelSet;
