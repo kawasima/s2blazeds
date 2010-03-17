@@ -306,6 +306,38 @@ Seasar2用にmy-amfのEndpointをS2AMFEndpointに書き換えます。
     ...
 &lt;/services-config&gt;
 </pre>
+<p>
+SSL通信を使用するときには、my-amfのEndpointに加えて
+my-secure-amfの設定のEndpointをS2SecureAMFEndpontに書き換えます。(S2BlazeDS1.0.2以降)
+</p>
+<pre>
+&lt;services-config&gt;
+    ...
+    &lt;services&gt;
+    ...
+    	&lt;default-channels&gt;
+           <strong>&lt;channel ref=&quot;my-secure-amf&quot;/&gt;</strong>
+           &lt;channel ref=&quot;my-amf&quot;/&gt;
+        &lt;/default-channels&gt;
+    &lt;/services&gt;
+    ...
+    &lt;channels&gt;
+        ...
+        &lt;channel-definition id=&quot;my-amf&quot; class=&quot;mx.messaging.channels.AMFChannel&quot;&gt;
+            &lt;endpoint url=&quot;http://{server.name}:{server.port}/{context.root}/messagebroker/amf&quot;
+                class=<b>&quot;org.seasar.blazeds.endpoints.S2AMFEndpoint&quot;</b>/&gt;
+        &lt;/channel-definition&gt;
+        ...
+        &lt;channel-definition id="my-secure-amf" class="mx.messaging.channels.AMFChannel"&gt;
+            &lt;endpoint url="https://{server.name}:{server.port}/{context.root}/messagebroker/amfsecure"
+                class=<b>"org.seasar.blazeds.endpoints.S2SecureAMFEndpoint"</b>/&gt;
+        &lt;/channel-definition&gt;
+        ...
+        
+    &lt;/channels&gt;
+    ...
+&lt;/services-config&gt;
+</pre>
 
 <h3><a name="remoting-config">remoting-config.xml</a></h3>
 <p>
@@ -330,6 +362,31 @@ s2-objectのadapter-definitionを追加します。
     &lt;/adapters&gt;
 
     &lt;default-channels&gt;
+        &lt;channel ref="my-amf"/&gt;
+    &lt;/default-channels&gt;
+    
+&lt;/service&gt;
+</pre>
+<p>
+SSL通信をするときには、Channelの設定にsecure-amfのchannelsetを追加します。(S2BlazeDS1.0.2以降)
+</p>
+<pre>
+&lt;service id="remoting-service"
+    class="flex.messaging.services.RemotingService"&gt;
+
+    &lt;adapters&gt;
+    &lt;!--
+        &lt;adapter-definition id="java-object"
+            class="flex.messaging.services.remoting.adapters.JavaAdapter"
+            default="true"/&gt; 
+    -->
+        &lt;adapter-definition id="s2-object"
+            class=<b>"org.seasar.blazeds.adapters.S2Adapter"</b>
+            default="true"/&gt;
+    &lt;/adapters&gt;
+
+    &lt;default-channels&gt;
+        &lt;channel ref="my-secure-amf"/&gt;
         &lt;channel ref="my-amf"/&gt;
     &lt;/default-channels&gt;
     
