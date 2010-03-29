@@ -31,6 +31,6 @@
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/s2-tiger-2.4.40.jar" sourcepath="webapp/WEB-INF/lib/sources/s2-tiger-2.4.40-sources.jar"/>
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/flex-messaging-core-3.3.0.12617.jar"/>
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/sa-struts-1.0.4-sp8.jar" sourcepath="webapp/WEB-INF/lib/sources/sa-struts-1.0.4-sp8-sources.jar"/>
-	<classpathentry kind="lib" path="webapp/WEB-INF/lib/s2blazeds-1.0.2-SNAPSHOT.jar" sourcepath="webapp/WEB-INF/lib/sources/s2blazeds-1.0.2-SNAPSHOT-sources.jar"/>
+	<classpathentry kind="lib" path="webapp/WEB-INF/lib/s2blazeds-1.0.2.jar" sourcepath="webapp/WEB-INF/lib/sources/s2blazeds-1.0.2-sources.jar"/>
 	<classpathentry kind="output" path="webapp/WEB-INF/classes"/>
 </classpath>
