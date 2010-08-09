@@ -1,6 +1,6 @@
 <project name="s2blazeds" default="dist" basedir=".">
 
-	<property name="ver" value="1.0.2" />
+	<property name="ver" value="1.0.3-SNAPSHOT" />
 
     <target name="dist">
         <mkdir dir="target"/>

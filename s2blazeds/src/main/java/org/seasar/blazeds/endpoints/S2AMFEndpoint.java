@@ -108,6 +108,7 @@ public class S2AMFEndpoint extends AMFEndpoint implements Disposable {
 						.getDefaultChannels());
 					destination.createAdapter(remotingService
 						.getDefaultAdapter());
+					destination.setSource(container.getComponentDef(message.getDestination()).getComponentClass().getName());
 					remotingService.addDestination(destination);
 					destination.start();
 				}
