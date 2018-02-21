@@ -1,0 +1,6 @@
+{
+  "name": "s2blazeds-js-client-example",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}

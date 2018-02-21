@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>S2BlazeDS Javascript client</title>
+        <script src="/js/amf.js"></script>
+    </head>
+    <body>
+        <h1>S2BlazeDS</h1>
+        <products></products>
+        <script src="/products.tag" type="riot/tag" ></script>
+        <script src="https://cdn.jsdelivr.net/npm/riot@3.9/riot+compiler.min.js"></script>
+        <script>
+         const client = new amf.Client("productService", "http://localhost:8080/messagebroker/amf");
+         riot.mount('products', {client: client});
+        </script>
+    </body>
+</html>
